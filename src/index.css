@@ -1,13 +1,245 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html,
+body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: #e6e6e6;
+	color: #000;
+	overflow: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label {
+	font-size: 1rem;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: normal;
+	font-style: normal;
+	line-height: normal;
+}
+
+/* page container */
+.page-container {
+	width: 100%;
+	height: 100vh;
+	background-color: #e6e6e6;
+}
+
+/* grid layout */
+.container {
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 250px 1fr 1fr;
+	grid-template-rows: 70px 1fr 1fr;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+
+.header {
+	grid-area: 1 / 1 / 2 / 6;
+}
+.aside {
+	grid-area: 2 / 1 / 6 / 2;
+}
+.content {
+	grid-area: 2 / 2 / 6 / 6;
+}
+
+/* main */
+.main-container {
+	width: 100%;
+	height: calc(100% - 60px);
+	/* border: 1px solid #000; */
+	display: flex;
+	flex-direction: row;
+	background-color: #e6e6e6;
+}
+
+/* form container */
+.form-container {
+	width: 100%;
+	height: 100%;
+	background-color: #e6e6e6;
+}
+
+.form {
+	/* max-width: 550px; */
+	width: fit-content;
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 8px 4px;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-top: 8px;
+	width: 350px;
+}
+
+/* alleasy logo */
+.alleasy-logo {
+	width: 150px;
+	height: 50px;
+	background-image: url('./assets/image/alleasylogo.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
+
+.form-button {
+	width: 100%;
+	border: none;
+	background-color: #ff7f14;
+	color: #fff;
+	height: 45px;
+	border-radius: 6px;
+	cursor: pointer;
+	margin-top: 1rem;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+	font-size: 1rem;
+	font-weight: 700;
+}
+.form-button:hover {
+	background-color: rgba(255, 127, 20, 0.9);
+}
+
+/* forgot password link */
+.forgot-password-link {
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: #ff7f14;
+	text-decoration: none;
+	margin: 0 auto;
+	margin-top: 12px;
+}
+
+.forgot-password-link:hover {
+	text-decoration: underline;
+}
+
+/* menu button */
+.menu-button {
+	width: 30px;
+	height: 30px;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	margin-right: 18px;
+}
+
+.menu-button svg {
+	width: 20px;
+	height: 20px;
+}
+
+.menu-close-button {
+	position: absolute;
+	right: -10%;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #fff;
+	z-index: 1000;
+	border: none;
+	cursor: pointer;
+	margin-right: 18px;
+}
+
+.menu-close-button svg {
+	width: 20px;
+	height: 20px;
+}
+
+/* navbar */
+.navbar-container {
+	max-width: 250px;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	border-right: 1px solid #e6e6e6;
+}
+
+/* navlink */
+.navlink {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	padding: 4px 8px;
+	border-radius: 6px;
+	border: none;
+	background-color: #fff;
+	text-decoration: none;
+	color: rgb(14, 53, 83);
+	padding-left: 0.8rem;
+	font-size: 1rem;
+}
+
+.navlink svg {
+	width: 18px;
+	height: 18px;
+	margin-right: 1rem;
+}
+
+.navlink-active {
+	background-color: #0e3553;
+	color: #fff;
+}
+
+/* date picker */
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+	display: block;
+	width: 100%;
+	height: 30px;
+}
+
+.react-datepicker__input-container input {
+	padding-left: 8px;
+	border-radius: 6px;
+	border: 1px solid #e6e6e6;
+	outline: none;
+	transition: all ease-in-out 300ms;
+}
+
+.react-datepicker__input-container input:hover {
+	box-shadow: 0 0 5px rgba(33, 150, 243, 0.4);
+	border: 1px solid #2196f3;
+}
+
+/* responsive */
+@media (max-width: 600px) {
+	.menu-button {
+		display: flex;
+	}
+
+	.navbar-container {
+		display: none;
+	}
 }

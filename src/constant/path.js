@@ -1,0 +1,12 @@
+export const LOGIN = '/';
+export const FORGOT_PASSWORD = '/forgot-password';
+export const BILLER = '/biller';
+export const ERROR = '/error';
+export const DASHBOARD = '/dashboard';
+export const MONITORING = '/monitoring';
+export const BRANCH = '/biller';
+export const BRANCH_GROUP = '/biller/groups';
+export const BRANCH_PROFILE = '/biller/profile';
+export const BRANCH_TRANSACTION = '/biller/transaction';
+export const BRANCH_SUMMARY = '/biller/summary';
+export const BRANCH_SETTLEMENT = '/biller/settlement';
