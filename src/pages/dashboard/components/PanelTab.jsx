@@ -35,11 +35,12 @@ const PanelTab = ({
 				<Tab label='To Date' {...a11yProps(3)} onClick={tabToDate} />
 			</Tabs>
 			<Box
-				height='100%'
+				height='50px'
 				width='fit-content'
 				display='flex'
 				flexDirection='row'
 				alignItems='center'
+				paddingY={1}
 				marginLeft={2}>
 				<DatePicker
 					selectsRange={true}

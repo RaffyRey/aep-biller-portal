@@ -1,103 +1,81 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Button } from '@mui/material';
+import {
+	Box,
+	Button,
+	FormControl,
+	IconButton,
+	InputLabel,
+	Select,
+	TextField,
+	Typography,
+} from '@mui/material';
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
 
-import { getFormattedDateTwo } from '../../../utilities/formatDate';
-
-export default function Filters() {
-	const [group, setGroup] = useState('');
-	const [dateRange, setDateRange] = useState();
-	const [searchValue, setSearchValue] = useState('');
-
-	const filter = (e) => {
-		e.preventDefault();
-		console.log(dateRange[0]);
-		console.log(getFormattedDateTwo(dateRange[0]));
-		console.log(getFormattedDateTwo(dateRange[1]));
-	};
-
+export default function Filters({
+	searchOnChange,
+	selectValue,
+	selectOnChange,
+	selectChildren,
+	pickerStartDate,
+	pickerEndDate,
+	pickerOnchange,
+	onFilter,
+	searchValue,
+	searchOnClick,
+}) {
 	return (
 		<Box
 			width='100%'
-			paddingY={1}
+			height={60}
+			padding={1}
 			display='flex'
 			alignItems='center'
 			justifyContent='space-between'>
 			{/* filter biller */}
-			<Box
-				width={600}
-				height={35}
-				display='flex'
-				flexDirection='row'
-				alignItems='center'>
-				{/* <SelectPicker style={{ width: 140, marginRight: 4, height: '100%' }} />
-				<DateRangePicker
-					style={{ width: 240, marginRight: 4, height: '100%' }}
-					format='yyyy-MM-dd'
-					onChange={(value) => setDateRange(value)}
-				/> */}
-				<Button
-					variant='contained'
-					sx={{
-						marginLeft: '4px',
-						height: '100%',
-						padding: 0,
-						backgroundColor: 'rgb(14, 53, 83)',
-					}}
-					onClick={filter}>
-					Filter
-				</Button>
-			</Box>
-			{/* end of filter biller */}
-			{/* <Divider orientation='vertical' sx={{ marginX: '8px' }} /> */}
-			{/* start of search by biller ref. */}
-			<Box
-				width={300}
-				height='35px'
-				display='flex'
-				flexDirection='row'
-				alignItems='center'
-				justifyContent='flex-end'>
-				{/* <AutoComplete
-					style={{ marginRight: 4 }}
-					data={data}
-					onChange={(value) => setSearchValue(value)}
-					placeholder='Search Biller ref...'
-				/> */}
-				<Button
-					variant='contained'
-					color='primary'
-					onClick={() => alert(searchValue)}
-					sx={{
-						background: 'rgb(14, 53, 83)',
-						height: '100%',
-						color: '#fff',
-					}}>
-					<SearchIcon />
-				</Button>
+			<Typography variant='h4' color='#333'>
+				Transactions
+			</Typography>
+			<Box height='100%' display='flex' alignItems='center' zIndex={1000}>
+				<Box display='flex' alignItems='center' height='100%'>
+					<FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+						<InputLabel id='demo-select-small'>Biller</InputLabel>
+						<Select
+							labelId='demo-select-small'
+							id='demo-select-small'
+							value={selectValue}
+							label='Biller'
+							onChange={selectOnChange}>
+							{selectChildren}
+						</Select>
+					</FormControl>
+					<DatePicker
+						selectsRange={true}
+						startDate={pickerStartDate}
+						endDate={pickerEndDate}
+						onChange={pickerOnchange}
+						placeholderText='Date Range'
+						isClearable={true}
+						className='input-datePicker'
+					/>
+					<Button variant='contained' sx={{ marginX: 1 }} onClick={onFilter}>
+						Filter
+					</Button>
+				</Box>
+				<Box display='flex' alignItems='center' height='100%'>
+					<TextField
+						label='Search'
+						id='outlined-size-small'
+						size='small'
+						value={searchValue}
+						onChange={searchOnChange}
+					/>
+					<IconButton color='primary' onClick={searchOnClick}>
+						<SearchIcon />
+					</IconButton>
+				</Box>
 			</Box>
 			{/* end of search by biller ref. */}
 		</Box>
 	);
 }
-
-const data = [
-	'Eugenia',
-	'Bryan',
-	'Linda',
-	'Nancy',
-	'Lloyd',
-	'Alice',
-	'Julia',
-	'Albert',
-	'Louisa',
-	'Lester',
-	'Lola',
-	'Lydia',
-	'Hal',
-	'Hannah',
-	'Harriet',
-	'Hattie',
-	'Hazel',
-	'Hilda',
-];

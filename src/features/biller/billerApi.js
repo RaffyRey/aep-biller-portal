@@ -56,6 +56,9 @@ export const billerApi = createApi({
 				// `/biller_group_admin/aggregate?from=${from}&to=${to}`,
 				`/biller_group_admin/aggregate?${loopDateData}`,
 		}),
+		listingParams: builder.query({
+			query: () => `/biller_group_admin/listings`,
+		}),
 	}),
 });
 
@@ -71,4 +74,5 @@ export const {
 	useChartParamsQuery,
 	useChartLoopParamsQuery,
 	useAdminQuery,
+	useListingParamsQuery,
 } = billerApi;

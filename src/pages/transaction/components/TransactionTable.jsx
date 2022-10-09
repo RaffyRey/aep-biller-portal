@@ -8,11 +8,11 @@ import {
 	TableRow,
 } from '@mui/material';
 import React from 'react';
-import { StyledTableCell } from './style';
+import { StyledTableCell } from '../../../style/style';
 
 export default function TransactionTable({ children }) {
 	return (
-		<Box sx={{ width: '100%', overflow: 'hidden', height: '100%' }}>
+		<Box sx={{ width: '100%', overflow: 'hidden', height: '90%' }}>
 			<TableContainer
 				sx={{ height: '100%', width: '100%', position: 'relative' }}
 				component={Paper}>
