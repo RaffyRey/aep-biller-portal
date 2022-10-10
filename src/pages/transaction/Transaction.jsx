@@ -122,7 +122,7 @@ export default function Transaction() {
 							) : (
 								transaction.map((row) => (
 									<StyledTableRow
-										key={row.ae_refno}
+										key={row.refno}
 										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 										<StyledTableCell align='center' sx={{ fontSize: '14px' }}>
 											{getFormattedDateTwo(row.created_at)}

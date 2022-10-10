@@ -14,9 +14,6 @@ import DatePicker from 'react-datepicker';
 
 export default function Filters({
 	searchOnChange,
-	selectValue,
-	selectOnChange,
-	selectChildren,
 	pickerStartDate,
 	pickerEndDate,
 	pickerOnchange,
@@ -34,21 +31,10 @@ export default function Filters({
 			justifyContent='space-between'>
 			{/* filter biller */}
 			<Typography variant='h4' color='#333'>
-				Transactions
+				Profile
 			</Typography>
 			<Box height='100%' display='flex' alignItems='center' zIndex={1000}>
 				<Box display='flex' alignItems='center' height='100%'>
-					<FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
-						<InputLabel id='demo-select-small'>Biller</InputLabel>
-						<Select
-							labelId='demo-select-small'
-							id='demo-select-small'
-							value={selectValue}
-							label='Biller'
-							onChange={selectOnChange}>
-							{selectChildren}
-						</Select>
-					</FormControl>
 					<DatePicker
 						selectsRange={true}
 						startDate={pickerStartDate}

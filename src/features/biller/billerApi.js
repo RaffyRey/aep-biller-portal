@@ -23,13 +23,16 @@ export const billerApi = createApi({
 			query: (params) => `/biller_group_admin/${params}`,
 		}),
 		profile: builder.query({
-			query: (page) => `/biller_group_admin/biller?page=${page}`,
+			query: (billerId) => `/biller_group_admin/biller/${billerId}`,
 		}),
 		settlementParam: builder.query({
 			query: (page) => `/biller_group_admin/settlement?page=${page}`,
 		}),
 		summary: builder.query({
 			query: () => '/biller_group_admin/summary',
+		}),
+		summaryBillerParam: builder.query({
+			query: (biller) => `/biller_group_admin/summary?biller=${biller}`,
 		}),
 		summaryParam: builder.query({
 			query: (page) => `/biller_group_admin/summary?page=${page}`,
@@ -75,4 +78,5 @@ export const {
 	useChartLoopParamsQuery,
 	useAdminQuery,
 	useListingParamsQuery,
+	useSummaryBillerParamQuery,
 } = billerApi;

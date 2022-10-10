@@ -53,13 +53,8 @@ export default function TransactionChart({ chartData }) {
 			display='flex'
 			justifyContent='center'
 			flexDirection='row'>
-			<Box
-				width={800}
-				height={500}
-				display='flex'
-				alignItems='center'
-				justifyContent='center'>
-				<Line data={chartData} options={options} width={800} height={500} />
+			<Box width='1020px' height='150px'>
+				<Line data={chartData} options={options} />
 			</Box>
 		</Box>
 	);

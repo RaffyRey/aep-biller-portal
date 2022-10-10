@@ -10,19 +10,15 @@ import {
 	Typography,
 } from '@mui/material';
 import React from 'react';
-import DatePicker from 'react-datepicker';
 
 export default function Filters({
 	searchOnChange,
-	selectValue,
-	selectOnChange,
-	selectChildren,
-	pickerStartDate,
-	pickerEndDate,
-	pickerOnchange,
 	onFilter,
 	searchValue,
 	searchOnClick,
+	selectValue,
+	selectOnChange,
+	selectChildren,
 }) {
 	return (
 		<Box
@@ -34,11 +30,11 @@ export default function Filters({
 			justifyContent='space-between'>
 			{/* filter biller */}
 			<Typography variant='h4' color='#333'>
-				Transactions
+				Summary
 			</Typography>
 			<Box height='100%' display='flex' alignItems='center' zIndex={1000}>
 				<Box display='flex' alignItems='center' height='100%'>
-					<FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+					<FormControl sx={{ m: 1, width: 150 }} size='small'>
 						<InputLabel id='demo-select-small'>Biller</InputLabel>
 						<Select
 							labelId='demo-select-small'
@@ -49,30 +45,12 @@ export default function Filters({
 							{selectChildren}
 						</Select>
 					</FormControl>
-					<DatePicker
-						selectsRange={true}
-						startDate={pickerStartDate}
-						endDate={pickerEndDate}
-						onChange={pickerOnchange}
-						placeholderText='Date Range'
-						isClearable={true}
-						className='input-datePicker'
-					/>
 					<Button variant='contained' sx={{ marginX: 1 }} onClick={onFilter}>
 						Filter
 					</Button>
-				</Box>
-				<Box display='flex' alignItems='center' height='100%'>
-					<TextField
-						label='Search'
-						id='outlined-size-small'
-						size='small'
-						value={searchValue}
-						onChange={searchOnChange}
-					/>
-					<IconButton color='primary' onClick={searchOnClick}>
-						<SearchIcon />
-					</IconButton>
+					<Button variant='contained' color='warning'>
+						Export
+					</Button>
 				</Box>
 			</Box>
 			{/* end of search by biller ref. */}
