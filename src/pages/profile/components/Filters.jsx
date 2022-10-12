@@ -1,14 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import {
-	Box,
-	Button,
-	FormControl,
-	IconButton,
-	InputLabel,
-	Select,
-	TextField,
-	Typography,
-} from '@mui/material';
+import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 

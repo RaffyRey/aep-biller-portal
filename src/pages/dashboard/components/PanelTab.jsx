@@ -28,7 +28,9 @@ const PanelTab = ({
 				value={tabValue}
 				onChange={tabOnChange}
 				aria-label='basic tabs example'
-				centered>
+				variant='scrollable'
+				scrollButtons
+				allowScrollButtonsMobile>
 				<Tab label='Daily' {...a11yProps(0)} onClick={tabDaily} />
 				<Tab label='Monthly' {...a11yProps(1)} onClick={tabMonthly} />
 				<Tab label='Yearly' {...a11yProps(2)} onClick={tabYearly} />

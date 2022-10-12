@@ -1,5 +1,4 @@
-import { Container, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, Container, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AllEasyLogo, Footer } from '../../components';
@@ -35,7 +34,7 @@ function Login() {
 
 	useEffect(() => {
 		if (isError) {
-			alert(message);
+			console.log(message);
 		}
 
 		if (isSuccess || data) {
@@ -48,7 +47,6 @@ function Login() {
 	// signin submit button
 	const onSignIn = (e) => {
 		e.preventDefault();
-
 		const userData = {
 			email,
 			password,
@@ -81,7 +79,8 @@ function Login() {
 						{/* login input form */}
 						<div className='form-group'>
 							<TextField
-								id='outlined-input'
+								// id='outlined-input'
+								id='outlined-error'
 								label='Email'
 								type='Email'
 								autoComplete='email'

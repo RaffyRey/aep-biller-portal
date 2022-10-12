@@ -73,8 +73,6 @@ function DataCard({ countData, amountData }) {
 	const DataCardBox = ({ children }) => {
 		return (
 			<Box
-				// boxShadow='0 0 5px rgba(0,0,0,.4)'
-				// height={70}
 				width={250}
 				paddingX={2}
 				display='flex'
@@ -94,7 +92,6 @@ function DataCard({ countData, amountData }) {
 					Transaction Count
 				</Typography>
 				<Typography variant='subtitle1' fontWeight={700} color='#f47b20'>
-					{/* {numberWithCommas(countData)} */}
 					{countData}
 				</Typography>
 			</DataCardBox>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as PATH from './constant/path';
 import { ProtectedRoutes } from './constant/ProtectedRoutes';
 import Dashboard from './pages/dashboard/Dashboard';
@@ -28,6 +30,7 @@ function App() {
 					<Route path={PATH.BRANCH_SETTLEMENT} element={<Settlement />} />
 				</Route>
 			</Routes>
+			<ToastContainer />
 		</div>
 	);
 }

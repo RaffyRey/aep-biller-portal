@@ -12,9 +12,8 @@ import { WebLayout } from '../../components';
 import {
 	useBillerQuery,
 	useListingParamsQuery,
-	useSummaryBillerParamQuery,
-	useSummaryParamQuery,
 } from '../../features/biller/billerApi';
+import { StyledTableRow } from '../../style/style';
 import { formatPesos } from '../../utilities/formatCurrency';
 import { getFormattedDateTwo } from '../../utilities/formatDate';
 import { numberWithCommas } from '../../utilities/formatNumberWithComma';
@@ -57,6 +56,7 @@ export default function Summary() {
 				height='100%'
 				display='flex'
 				flexDirection='column'
+				overflow='auto'
 				bgcolor='#fff'
 				paddingY={1}
 				paddingX={2}>
@@ -78,7 +78,7 @@ export default function Summary() {
 					onFilter={onFilter}
 				/>
 				<Divider orientation='horizontal' sx={{ marginBottom: 2 }} flexItem />
-				<Box width='100%' height='fit-content' overflow='auto'>
+				<Box width='100%' height='fit-content'>
 					<ProfileCard
 						profileName={
 							isFetching ? (
@@ -119,15 +119,18 @@ export default function Summary() {
 						) : (
 							billerData &&
 							billerData.data.listings.data.map((row) => (
-								<DataRow
-									dataKey={row.refno}
-									dataOne={getFormattedDateTwo(row.created_at)}
-									dataTwo={row.ae_refno}
-									dataThree={row.payment_type}
-									dataFour={formatPesos(row.debit)}
-									dataFive={row.sender_name}
-									dataSix={row.refno}
-								/>
+								<StyledTableRow
+									key={row.ae_refno}
+									sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+									<DataRow
+										dataOne={getFormattedDateTwo(row.created_at)}
+										dataTwo={row.ae_refno}
+										dataThree={row.payment_type}
+										dataFour={formatPesos(row.debit)}
+										dataFive={row.sender_name}
+										dataSix={row.refno}
+									/>
+								</StyledTableRow>
 							))
 						)}
 					</SummaryTable>

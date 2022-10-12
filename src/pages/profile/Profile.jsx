@@ -6,7 +6,7 @@ import {
 	TableCell,
 	TableRow,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { WebLayout } from '../../components';
 import {
 	useBillerQuery,
@@ -29,11 +29,8 @@ export default function Profile() {
 
 	const [billerParams, setBillerParams] = useState(billerId);
 
-	const {
-		data: biller,
-		isFetching: billerFetching,
-		isError,
-	} = useProfileQuery(billerParams);
+	const { data: biller, isFetching: billerFetching } =
+		useProfileQuery(billerParams);
 
 	const handleChange = (event, value) => {
 		setPage(value);

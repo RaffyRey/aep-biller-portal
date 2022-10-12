@@ -2,13 +2,13 @@ import React from 'react';
 import { StyledTableCell } from '../../../style/style';
 
 const DataRow = ({
-	dataKey,
 	dataOne,
 	dataTwo,
 	dataThree,
 	dataFour,
 	dataFive,
 	dataSix,
+	dataSeven,
 }) => {
 	return (
 		<>
@@ -29,6 +29,9 @@ const DataRow = ({
 			</StyledTableCell>
 			<StyledTableCell align='center' sx={{ fontSize: '14px' }}>
 				{dataSix}
+			</StyledTableCell>
+			<StyledTableCell align='center' sx={{ fontSize: '14px' }}>
+				{dataSeven}
 			</StyledTableCell>
 		</>
 	);

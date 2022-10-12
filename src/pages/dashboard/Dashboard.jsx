@@ -131,7 +131,8 @@ function Dashboard() {
 				padding={2}
 				display='flex'
 				alignItems='center'
-				flexDirection='column'>
+				flexDirection='column'
+				overflow='auto'>
 				{/* left box */}
 
 				<TransactionData

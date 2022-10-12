@@ -1,6 +1,5 @@
 import {
 	Box,
-	makeStyles,
 	Pagination,
 	Paper,
 	Table,

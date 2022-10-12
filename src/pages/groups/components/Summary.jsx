@@ -56,7 +56,7 @@ function BillerGroupCard({ cardLabel, cardData }) {
 			<Typography
 				variant='subtitle1'
 				color='#f47b20'
-				fontSize={12}
+				fontSize={10}
 				textAlign='left'
 				fontWeight='600'>
 				{cardLabel}

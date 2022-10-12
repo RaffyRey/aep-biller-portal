@@ -24,7 +24,7 @@ export default function Filters({
 			justifyContent='space-between'>
 			{/* filter biller */}
 			<Typography variant='h4' color='#333'>
-				Summary
+				Settlement
 			</Typography>
 			<Box height='100%' display='flex' alignItems='center' zIndex={1000}>
 				<Box display='flex' alignItems='center' height='100%'>

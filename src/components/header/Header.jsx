@@ -10,13 +10,16 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, {
+	// useEffect,
+	useState,
+} from 'react';
 import { FaBars } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as PATH from '../../constant/path';
 import { logout, reset } from '../../features/auth/authSlice';
-import { getBillerData } from '../../features/data/dataSlice';
+// import { getBillerData } from '../../features/data/dataSlice';
 import AllEasyLogo from '../alleasyLogo/AllEasyLogo';
 import ResponsiveDrawer from '../drawer/Drawer';
 
@@ -27,7 +30,7 @@ function Header() {
 	const navigate = useNavigate();
 
 	const { data } = useSelector((state) => state.auth);
-	const { biller } = useSelector((state) => state.data);
+	// const { biller } = useSelector((state) => state.data);
 
 	const onLogout = () => {
 		dispatch(logout());
@@ -44,9 +47,9 @@ function Header() {
 		setAnchorElUser(null);
 	};
 
-	useEffect(() => {
-		dispatch(getBillerData());
-	}, []);
+	// useEffect(() => {
+	// 	dispatch(getBillerData());
+	// }, []);
 
 	return (
 		<>
@@ -60,6 +63,7 @@ function Header() {
 					justifyContent: 'space-between',
 					alignItems: 'center',
 					padding: '0 2rem',
+					boxShadow: 'none',
 					borderBottom: '1px solid #e6e6e6',
 				}}>
 				<Box display='flex' alignItems='center'>

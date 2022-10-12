@@ -78,7 +78,7 @@ const BillerGroup = () => {
 const DataCard = ({ dataLabel, cardData }) => {
 	return (
 		<Box display='flex' flexDirection='column' alignItems='flex-start'>
-			<Typography variant='h6' color='#333'>
+			<Typography variant='h6' color='#333' fontSize={12}>
 				{dataLabel}:{' '}
 			</Typography>
 			<Typography variant='subtitle1' color='#5f5f5f'>

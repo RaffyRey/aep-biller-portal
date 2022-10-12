@@ -11,7 +11,7 @@ import {
 	Typography,
 } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { WebLayout } from '../../components';
 import { useBillerQuery } from '../../features/biller/billerApi';
 import { StyledTableCell, StyledTableRow } from '../../style/style';
@@ -35,24 +35,15 @@ function Monitoring() {
 		setParams(`transaction/v2?page=${value}&group_by=day`);
 	};
 
-	useEffect(() => {
-		// data interval
-		// setInterval(() => {
-		// 	window.location.reload();
-		// }, 300000);
-	});
-
 	return (
 		<WebLayout>
 			<Box
 				width='100%'
 				height='100%'
 				display='flex'
-				alignItems='center'
 				bgcolor='#fff'
-				justifyContent='center'
 				flexDirection='column'>
-				<Typography variant='h5' textAlign='center' color='#333'>
+				<Typography variant='h5' textAlign='center' color='#333' marginTop={1}>
 					Daily Transaction Monitoring
 				</Typography>
 				<Box width='100%' height='600px' bgcolor='#fff' padding={2}>
@@ -118,15 +109,18 @@ function Monitoring() {
 					</Box>
 					<Box
 						width='100%'
-						height={40}
+						height={window.matchMedia('(max-width:500px)') ? 'fit-content' : 40}
+						marginTop={2}
 						display='flex'
 						alignItems='center'
 						justifyContent='center'>
 						<Pagination
 							// page={page}
 							count={total_page}
+							size='small'
 							showFirstButton
 							showLastButton
+							shape='rounded'
 							onChange={handleChange}
 						/>
 					</Box>

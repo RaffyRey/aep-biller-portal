@@ -11,7 +11,7 @@ body {
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	background-color: #e6e6e6;
+	background-color: #fff;
 	color: #000;
 	overflow: auto;
 }
@@ -31,11 +31,19 @@ label {
 	line-height: normal;
 }
 
+#root {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 /* page container */
 .page-container {
+	max-width: 1440px;
 	width: 100%;
 	height: 100vh;
-	background-color: #e6e6e6;
+	max-height: 1000px;
+	background-color: #fff;
 }
 
 /* grid layout */
@@ -66,14 +74,14 @@ label {
 	/* border: 1px solid #000; */
 	display: flex;
 	flex-direction: row;
-	background-color: #e6e6e6;
+	background-color: #fff;
 }
 
 /* form container */
 .form-container {
 	width: 100%;
 	height: 100%;
-	background-color: #e6e6e6;
+	background-color: #fff;
 }
 
 .form {
@@ -235,7 +243,35 @@ label {
 }
 
 /* responsive */
-@media (max-width: 600px) {
+@media (max-width: 840px) {
+	/* grid container */
+	.container {
+		grid-template-columns: 100px 1fr 1fr;
+	}
+
+	/* navbar */
+	.navlink {
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.navlink svg {
+		margin: 0;
+	}
+
+	.navlink p {
+		display: none;
+	}
+}
+
+@media (max-width: 700px) {
+	/* grid container */
+	.container {
+		grid-template-columns: 0px 1fr 1fr;
+	}
+
 	.menu-button {
 		display: flex;
 	}

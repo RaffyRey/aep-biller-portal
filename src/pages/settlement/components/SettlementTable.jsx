@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import { StyledTableCell } from '../../../style/style';
 
-export default function SummaryTable({ children }) {
+export default function SettlementTable({ children }) {
 	return (
 		<Box sx={{ width: '100%', overflow: 'hidden' }} maxWidth={1200}>
 			<TableContainer
@@ -31,7 +31,8 @@ export default function SummaryTable({ children }) {
 							<StyledTableCell align='center'>Biller Reference No.</StyledTableCell>
 							<StyledTableCell align='center'>Type</StyledTableCell>
 							<StyledTableCell align='center'>Amount</StyledTableCell>
-							<StyledTableCell align='center'>Name</StyledTableCell>
+							<StyledTableCell align='center'>Transaction Fee</StyledTableCell>
+							<StyledTableCell align='center'>Settlement Amount</StyledTableCell>
 							<StyledTableCell align='center'>AllEasy Reference</StyledTableCell>
 						</TableRow>
 					</TableHead>

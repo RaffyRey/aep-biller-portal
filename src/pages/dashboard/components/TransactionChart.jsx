@@ -27,10 +27,6 @@ export default function TransactionChart({ chartData }) {
 		Tooltip,
 	);
 
-	// let labels = { labelsProps };
-
-	// let dataChart = { chartDataProps };
-
 	const options = {
 		responsive: true,
 		plugins: {
@@ -53,7 +49,7 @@ export default function TransactionChart({ chartData }) {
 			display='flex'
 			justifyContent='center'
 			flexDirection='row'>
-			<Box width='1020px' height='150px'>
+			<Box maxWidth='1020px' width='100%' height='150px'>
 				<Line data={chartData} options={options} />
 			</Box>
 		</Box>
