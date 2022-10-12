@@ -9,7 +9,7 @@ import {
 	TableRow,
 } from '@mui/material';
 import React, { useState } from 'react';
-import { WebLayout } from '../../components';
+import { TablePagination, WebLayout } from '../../components';
 import {
 	useBillerQuery,
 	useListingParamsQuery,
@@ -33,7 +33,7 @@ export default function Transaction() {
 	let transaction = data && data.data.listings.collections;
 	let total_page = data && data.data.listings.meta.pagination.total_pages;
 
-	const handleChange = (event, value) => {
+	const onPagination = (event, value) => {
 		setPage(value);
 		setParams(`transaction/v2?page=${value}`);
 	};
@@ -146,20 +146,7 @@ export default function Transaction() {
 								))
 							)}
 						</TransactionTable>
-						<Box
-							width='100%'
-							height={40}
-							display='flex'
-							alignItems='center'
-							justifyContent='center'>
-							<Pagination
-								// page={page}
-								count={total_page}
-								showFirstButton
-								showLastButton
-								onChange={handleChange}
-							/>
-						</Box>
+						<TablePagination total_page={total_page} handleChange={onPagination} />
 					</Box>
 				</Box>
 			</Box>

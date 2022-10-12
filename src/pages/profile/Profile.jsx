@@ -25,17 +25,18 @@ export default function Profile() {
 
 	let billers = data && data.data.listings.billers;
 	let total_page = data && data.data.listings.meta.pagination.total_pages;
-	let billerId = data && data.data.listings.billers[0].id;
 
-	const [billerParams, setBillerParams] = useState(billerId);
-
-	const { data: biller, isFetching: billerFetching } =
-		useProfileQuery(billerParams);
-
-	const handleChange = (event, value) => {
+	const handleChange = (e, value) => {
+		e.preventDefault();
 		setPage(value);
 		setParams(`biller?page=${value}`);
 	};
+
+	const [billerParams, setBillerParams] = useState(0);
+
+	let billerId = data && data.data.listings.billers[billerParams].id;
+
+	const { data: biller, isFetching: billerFetching } = useProfileQuery(billerId);
 
 	// search
 	const searchOnClick = (e) => {
@@ -75,42 +76,100 @@ export default function Profile() {
 								</TableCell>
 							</TableRow>
 						) : (
-							billers.map((res) => (
+							billers.map((res, index) => (
 								<TableRow key={res.id}>
 									<TableCell>
 										<DataCard
 											billerLogo={res.logo}
 											billerName={res.name}
 											billerEmail={res.contact_email}
-											cardOnClick={() => {
-												setBillerParams(`${res.id}`);
-											}}
+											cardOnClick={() => setBillerParams(index)}
 										/>
 									</TableCell>
 								</TableRow>
 							))
 						)}
 					</Data>
-					{billerFetching ? (
-						<CircularProgress />
-					) : (
-						<ProfileCard
-							profileImg={biller && biller.data.billers.logo}
-							profileName={biller && biller.data.billers.name}
-							profileCompany={biller && biller.data.billers.name}
-							profileCategory={biller && biller.data.billers.category}
-							profileStatus={
-								biller && biller.data.billers.is_live === 0 ? 'InActive' : 'Active'
-							}
-							profileFee={biller && biller.data.billers.ae_system_fee}
-							profileConvenience={biller && biller.data.billers.fee}
-							profileContact={biller && biller.data.billers.contact_person}
-							profileNumber={biller && biller.data.billers.contact_no}
-							profileEmail={biller && biller.data.billers.contact_email}
-						/>
-					)}
+					<ProfileCard
+						profileImg={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : (
+								biller && biller.data.billers.logo
+							)
+						}
+						profileName={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : (
+								biller && biller.data.billers.name
+							)
+						}
+						profileCompany={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : (
+								biller && biller.data.billers.name
+							)
+						}
+						profileCategory={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : (
+								biller && biller.data.billers.category
+							)
+						}
+						profileStatus={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : biller && biller.data.billers.is_live === 0 ? (
+								'InActive'
+							) : (
+								'Active'
+							)
+						}
+						profileFee={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : (
+								biller && biller.data.billers.ae_system_fee
+							)
+						}
+						profileConvenience={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : (
+								biller && biller.data.billers.fee
+							)
+						}
+						profileContact={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : (
+								biller && biller.data.billers.contact_person
+							)
+						}
+						profileNumber={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : (
+								biller && biller.data.billers.contact_no
+							)
+						}
+						profileEmail={
+							billerFetching ? (
+								<ProfileDataLoader />
+							) : (
+								biller && biller.data.billers.contact_email
+							)
+						}
+					/>
 				</Box>
 			</Box>
 		</WebLayout>
 	);
 }
+
+const ProfileDataLoader = () => {
+	return <Skeleton width={150} height={20} sx={{ marginLeft: 1 }} />;
+};

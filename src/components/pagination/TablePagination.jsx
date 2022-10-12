@@ -1,19 +1,7 @@
-import { Box, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Pagination } from '@mui/material';
 import React from 'react';
-import {
-	FaAngleDoubleLeft,
-	FaAngleDoubleRight,
-	FaAngleLeft,
-	FaAngleRight,
-} from 'react-icons/fa';
 
-export default function TablePagination({
-	onFirstPage,
-	onPrev,
-	onPage,
-	onNext,
-	onFinalPage,
-}) {
+const TablePagination = ({ total_page, handleChange }) => {
 	return (
 		<Box
 			width='100%'
@@ -21,21 +9,15 @@ export default function TablePagination({
 			display='flex'
 			alignItems='center'
 			justifyContent='center'>
-			<Stack direction='row' spacing={1} alignItems='center'>
-				<IconButton color='primary' onClick={onFirstPage}>
-					<FaAngleDoubleLeft />
-				</IconButton>
-				<IconButton color='primary' onClick={onPrev}>
-					<FaAngleLeft />
-				</IconButton>
-				<Typography variant='subtitle1'>{onPage}</Typography>
-				<IconButton color='primary' onClick={onNext}>
-					<FaAngleRight />
-				</IconButton>
-				<IconButton color='primary' onClick={onFinalPage}>
-					<FaAngleDoubleRight />
-				</IconButton>
-			</Stack>
+			<Pagination
+				count={total_page}
+				showFirstButton
+				showLastButton
+				size='small'
+				onChange={handleChange}
+			/>
 		</Box>
 	);
-}
+};
+
+export default TablePagination;

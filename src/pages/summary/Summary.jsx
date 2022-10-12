@@ -8,7 +8,7 @@ import {
 	TableRow,
 } from '@mui/material';
 import React, { useState } from 'react';
-import { WebLayout } from '../../components';
+import { TablePagination, WebLayout } from '../../components';
 import {
 	useBillerQuery,
 	useListingParamsQuery,
@@ -44,7 +44,7 @@ export default function Summary() {
 	};
 
 	// pagination
-	const handleChange = (event, value) => {
+	const onPagination = (event, value) => {
 		setPage(value);
 		setBillerParams(`summary?page=${value}`);
 	};
@@ -134,20 +134,7 @@ export default function Summary() {
 							))
 						)}
 					</SummaryTable>
-					<Box
-						width='100%'
-						height={40}
-						display='flex'
-						alignItems='center'
-						justifyContent='center'>
-						<Pagination
-							// page={page}
-							count={total_page}
-							showFirstButton
-							showLastButton
-							onChange={handleChange}
-						/>
-					</Box>
+					<TablePagination total_page={total_page} handleChange={onPagination} />
 				</Box>
 			</Box>
 		</WebLayout>

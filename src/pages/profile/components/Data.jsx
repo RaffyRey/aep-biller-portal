@@ -1,6 +1,5 @@
 import {
 	Box,
-	Pagination,
 	Paper,
 	Table,
 	TableBody,
@@ -9,6 +8,7 @@ import {
 	TableRow,
 } from '@mui/material';
 import React from 'react';
+import { TablePagination } from '../../../components';
 import { StyledTableCell } from '../../../style/style';
 
 export const Data = ({ children, onCount, handleChange }) => {
@@ -32,20 +32,7 @@ export const Data = ({ children, onCount, handleChange }) => {
 					</Table>
 				</TableContainer>
 			</Box>
-			<Box
-				width='100%'
-				height='10%'
-				display='flex'
-				alignItems='center'
-				justifyContent='center'>
-				<Pagination
-					// page={page}
-					count={onCount}
-					showFirstButton
-					showLastButton
-					onChange={handleChange}
-				/>
-			</Box>
+			<TablePagination />
 		</Box>
 	);
 };

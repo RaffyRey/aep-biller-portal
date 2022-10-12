@@ -35,32 +35,32 @@ const ProfileCard = ({
 				<Divider orientation='vertical' flexItem sx={{ marginX: 2 }} />
 				<CardContent
 					sx={{ display: 'flex', flexDirection: 'column', width: '70%' }}>
-					<Typography variant='h6' color='#333'>
+					<Typography variant='h6' color='#333' display='flex'>
 						{profileName}
 					</Typography>
 					<Divider orientation='horizontal' flexItem sx={{ marginY: 1 }} />
-					<Typography variant='subtitle1' color='#333'>
+					<Typography variant='subtitle1' color='#333' display='flex'>
 						Company name: {profileCompany}
 					</Typography>
-					<Typography variant='subtitle1' color='#333'>
+					<Typography variant='subtitle1' color='#333' display='flex'>
 						Biller Category: {profileCategory}
 					</Typography>
-					<Typography variant='subtitle1' color='#333'>
+					<Typography variant='subtitle1' color='#333' display='flex'>
 						Status: {profileStatus}
 					</Typography>
-					<Typography variant='subtitle1' color='#333'>
+					<Typography variant='subtitle1' color='#333' display='flex'>
 						Biller fee: {profileFee}
 					</Typography>
-					<Typography variant='subtitle1' color='#333'>
+					<Typography variant='subtitle1' color='#333' display='flex'>
 						Convenience fee: {profileConvenience}
 					</Typography>
-					<Typography variant='subtitle1' color='#333'>
+					<Typography variant='subtitle1' color='#333' display='flex'>
 						Contact Person: {profileContact}
 					</Typography>
-					<Typography variant='subtitle1' color='#333'>
+					<Typography variant='subtitle1' color='#333' display='flex'>
 						Contact Number: {profileNumber}
 					</Typography>
-					<Typography variant='subtitle1' color='#333'>
+					<Typography variant='subtitle1' color='#333' display='flex'>
 						Contact Person Email Address: {profileEmail}
 					</Typography>
 				</CardContent>
