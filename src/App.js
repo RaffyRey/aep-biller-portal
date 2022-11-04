@@ -20,10 +20,9 @@ function App() {
 	const { data } = useSelector((state) => state.auth);
 
 	// useEffect(() => {
-	// 	if (data.status !== 200) {
+	// 	if (data =) {
 	// 		navigate(PATH.LOGIN);
 	// 	}
-	// 	console.log(data.status);
 	// }, [data]);
 
 	return (
