@@ -39,33 +39,56 @@ const ProfileCard = ({
 						{profileName}
 					</Typography>
 					<Divider orientation='horizontal' flexItem sx={{ marginY: 1 }} />
-					<Typography variant='subtitle1' color='#333' display='flex'>
-						Company name: {profileCompany}
-					</Typography>
-					<Typography variant='subtitle1' color='#333' display='flex'>
-						Biller Category: {profileCategory}
-					</Typography>
-					<Typography variant='subtitle1' color='#333' display='flex'>
-						Status: {profileStatus}
-					</Typography>
-					<Typography variant='subtitle1' color='#333' display='flex'>
-						Biller fee: {profileFee}
-					</Typography>
-					<Typography variant='subtitle1' color='#333' display='flex'>
-						Convenience fee: {profileConvenience}
-					</Typography>
-					<Typography variant='subtitle1' color='#333' display='flex'>
-						Contact Person: {profileContact}
-					</Typography>
-					<Typography variant='subtitle1' color='#333' display='flex'>
-						Contact Number: {profileNumber}
-					</Typography>
-					<Typography variant='subtitle1' color='#333' display='flex'>
-						Contact Person Email Address: {profileEmail}
-					</Typography>
+					<ProfileCardTypography
+						profileLabel='Company name:'
+						profileData={profileCompany}
+					/>
+					<ProfileCardTypography
+						profileLabel='Biller Category:'
+						profileData={profileCategory}
+					/>
+
+					<ProfileCardTypography
+						profileLabel='Status:'
+						profileData={profileStatus}
+					/>
+					<ProfileCardTypography
+						profileLabel='Biller fee:'
+						profileData={profileFee}
+					/>
+					<ProfileCardTypography
+						profileLabel='Convenience fee:'
+						profileData={profileConvenience}
+					/>
+					<ProfileCardTypography
+						profileLabel='Contact Person:'
+						profileData={profileContact}
+					/>
+					<ProfileCardTypography
+						profileLabel='Contact Number:'
+						profileData={profileNumber}
+					/>
+
+					<ProfileCardTypography
+						profileLabel='Contact Person Email Address:'
+						profileData={profileEmail}
+					/>
 				</CardContent>
 			</Card>
 		</Box>
+	);
+};
+
+const ProfileCardTypography = ({ profileData, profileLabel }) => {
+	return (
+		<Typography
+			variant='subtitle1'
+			color='#333'
+			display='flex'
+			alignItems='center'>
+			<p style={{ color: '#adb5bd', marginRight: 6 }}>{profileLabel}</p>{' '}
+			{profileData}
+		</Typography>
 	);
 };
 

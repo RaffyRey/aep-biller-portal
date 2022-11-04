@@ -1,5 +1,5 @@
 import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
-import { List, ListItem } from '@mui/material';
+import { List, ListItem, Tooltip } from '@mui/material';
 // import React, { useState } from 'react';
 import {
 	FaDesktop,
@@ -9,25 +9,37 @@ import {
 	FaStoreAlt,
 	FaThLarge,
 } from 'react-icons/fa';
+// import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import * as PATH from '../../constant/path';
+import { logout, reset } from '../../features/auth/authSlice';
 
 const Navlist = () => {
+	// const navigate = useNavigate();
+	// const dispatch = useDispatch();
 	// const [open, setOpen] = useState(false);
 
 	// const handleClick = () => {
 	// 	setOpen(!open);
 	// };
 
+	// const onLogout = () => {
+	// 	dispatch(logout());
+	// 	dispatch(reset());
+	// 	navigate(PATH.LOGIN);
+	// };
+
 	return (
 		<List component='nav' sx={{ height: '100%', width: '100%' }}>
-			<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
-				<ListItemNavLink
-					navlinkPath={PATH.DASHBOARD}
-					navlinkIcon={<FaThLarge />}
-					navlinkLabel='Dashboard'
-				/>
-			</ListItem>
+			<Tooltip title='Dashboard' placement='right'>
+				<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
+					<ListItemNavLink
+						navlinkPath={PATH.DASHBOARD}
+						navlinkIcon={<FaThLarge />}
+						navlinkLabel='Dashboard'
+					/>
+				</ListItem>
+			</Tooltip>
 			<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
 				<ListItemNavLink
 					navlinkPath={PATH.MONITORING}
@@ -70,6 +82,7 @@ const Navlist = () => {
 					navlinkLabel='Settlement'
 				/>
 			</ListItem>
+			{/* <button onClick={onLogout}>logout</button> */}
 		</List>
 	);
 };

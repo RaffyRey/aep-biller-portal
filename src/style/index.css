@@ -37,6 +37,19 @@ label {
 	justify-content: center;
 }
 
+/* global scrollbar */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #e6e6e6;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #26577d;
+}
+
 /* page container */
 .page-container {
 	max-width: 1920px;

@@ -10,16 +10,12 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
-import React, {
-	// useEffect,
-	useState,
-} from 'react';
+import React, { useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as PATH from '../../constant/path';
 import { logout, reset } from '../../features/auth/authSlice';
-// import { getBillerData } from '../../features/data/dataSlice';
 import AllEasyLogo from '../alleasyLogo/AllEasyLogo';
 import ResponsiveDrawer from '../drawer/Drawer';
 
@@ -30,7 +26,6 @@ function Header() {
 	const navigate = useNavigate();
 
 	const { data } = useSelector((state) => state.auth);
-	// const { biller } = useSelector((state) => state.data);
 
 	const onLogout = () => {
 		dispatch(logout());
@@ -46,10 +41,6 @@ function Header() {
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
-
-	// useEffect(() => {
-	// 	dispatch(getBillerData());
-	// }, []);
 
 	return (
 		<>

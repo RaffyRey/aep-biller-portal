@@ -28,61 +28,52 @@ const ProfileCard = ({
 					<Divider orientation='horizontal' flexItem sx={{ marginY: 1 }} />
 					<Box width='100%' display='flex' flexDirection='row'>
 						<Box display='flex' flexDirection='column' marginRight={2}>
-							<Typography
-								variant='subtitle1'
-								color='#333'
-								display='flex'
-								alignItems='center'
-								flexDirection='row'>
-								Transaction Date: {profileTransactionDate}
-							</Typography>
-							<Typography
-								variant='subtitle1'
-								color='#333'
-								display='flex'
-								alignItems='center'
-								flexDirection='row'>
-								Transaction Count: {profileTransactionCount}
-							</Typography>
-							<Typography
-								variant='subtitle1'
-								color='#333'
-								display='flex'
-								alignItems='center'
-								flexDirection='row'>
-								Transaction Fee: {profileTransactionFee}
-							</Typography>
+							<ProfileCardTypography
+								profileLabel='Transaction Date:'
+								profileData={profileTransactionDate}
+							/>
+							<ProfileCardTypography
+								profileLabel='Transaction Count:'
+								profileData={profileTransactionCount}
+							/>
+
+							<ProfileCardTypography
+								profileLabel='Transaction Fee:'
+								profileData={profileTransactionFee}
+							/>
 						</Box>
 						<Box display='flex' flexDirection='column' marginLeft={2}>
-							<Typography
-								variant='subtitle1'
-								color='#333'
-								display='flex'
-								alignItems='center'
-								flexDirection='row'>
-								Total Transaction Amount: {profileTransactionAmount}
-							</Typography>
-							<Typography
-								variant='subtitle1'
-								color='#333'
-								display='flex'
-								alignItems='center'
-								flexDirection='row'>
-								Total Transaction Fee: {profileTotalTransactionFee}
-							</Typography>
-							<Typography
-								variant='subtitle1'
-								color='#333'
-								display='flex'
-								alignItems='center'
-								flexDirection='row'>
-								Total Settlement Amount: {profileSettlementAmount}
-							</Typography>
+							<ProfileCardTypography
+								profileLabel='Total Transaction Amount:'
+								profileData={profileTransactionAmount}
+							/>
+
+							<ProfileCardTypography
+								profileLabel='Total Transaction Fee:'
+								profileData={profileTotalTransactionFee}
+							/>
+							<ProfileCardTypography
+								profileLabel='Total Settlement Amount:'
+								profileData={profileSettlementAmount}
+							/>
 						</Box>
 					</Box>
 				</CardContent>
 			</Card>
 		</Box>
+	);
+};
+
+const ProfileCardTypography = ({ profileData, profileLabel }) => {
+	return (
+		<Typography
+			variant='subtitle1'
+			color='#333'
+			display='flex'
+			alignItems='center'>
+			<p style={{ color: '#adb5bd', marginRight: 6 }}>{profileLabel}</p>{' '}
+			{profileData}
+		</Typography>
 	);
 };
 

@@ -142,6 +142,7 @@ function Dashboard() {
 							<CircularProgress size={16} />
 						) : (
 							numberWithCommas(transaction && transaction.data.aggregate[0].count)
+							// transaction && transaction.data.aggregate[0].count
 						)
 					}
 					amountData={
