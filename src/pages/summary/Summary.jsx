@@ -123,7 +123,7 @@ export default function Summary() {
 									key={row.ae_refno}
 									sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 									<DataRow
-										dataOne={getFormattedDateTwo(row.created_at)}
+										dataOne={row.transaction.created_at}
 										dataTwo={row.ae_refno}
 										dataThree={row.payment_type}
 										dataFour={formatPesos(row.debit)}

@@ -1,4 +1,3 @@
-import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
 import { List, ListItem, Tooltip } from '@mui/material';
 // import React, { useState } from 'react';
 import {
@@ -6,6 +5,7 @@ import {
 	FaListOl,
 	FaRegCreditCard,
 	FaRegUser,
+	FaScroll,
 	FaStoreAlt,
 	FaThLarge,
 } from 'react-icons/fa';
@@ -40,48 +40,60 @@ const Navlist = () => {
 					/>
 				</ListItem>
 			</Tooltip>
-			<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
-				<ListItemNavLink
-					navlinkPath={PATH.MONITORING}
-					navlinkIcon={<FaDesktop />}
-					navlinkLabel='Monitoring'
-				/>
-			</ListItem>
-			<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
-				<ListItemNavLink
-					navlinkPath={PATH.BRANCH_GROUP}
-					navlinkIcon={<FaStoreAlt />}
-					navlinkLabel='Group'
-				/>
-			</ListItem>
-			<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
-				<ListItemNavLink
-					navlinkPath={PATH.BRANCH_TRANSACTION}
-					navlinkIcon={<FaRegCreditCard />}
-					navlinkLabel='Transaction'
-				/>
-			</ListItem>
-			<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
-				<ListItemNavLink
-					navlinkPath={PATH.BRANCH_PROFILE}
-					navlinkIcon={<FaRegUser />}
-					navlinkLabel='Profile'
-				/>
-			</ListItem>
-			<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
-				<ListItemNavLink
-					navlinkPath={PATH.BRANCH_SUMMARY}
-					navlinkIcon={<FaListOl />}
-					navlinkLabel='Summary'
-				/>
-			</ListItem>
-			<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
-				<ListItemNavLink
-					navlinkPath={PATH.BRANCH_SETTLEMENT}
-					navlinkIcon={<HistoryEduOutlinedIcon />}
-					navlinkLabel='Settlement'
-				/>
-			</ListItem>
+			<Tooltip title='Monitoring' placement='right'>
+				<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
+					<ListItemNavLink
+						navlinkPath={PATH.MONITORING}
+						navlinkIcon={<FaDesktop />}
+						navlinkLabel='Monitoring'
+					/>
+				</ListItem>
+			</Tooltip>
+			<Tooltip title='Group' placement='right'>
+				<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
+					<ListItemNavLink
+						navlinkPath={PATH.BRANCH_GROUP}
+						navlinkIcon={<FaStoreAlt />}
+						navlinkLabel='Group'
+					/>
+				</ListItem>
+			</Tooltip>
+			<Tooltip title='Transaction' placement='right'>
+				<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
+					<ListItemNavLink
+						navlinkPath={PATH.BRANCH_TRANSACTION}
+						navlinkIcon={<FaRegCreditCard />}
+						navlinkLabel='Transaction'
+					/>
+				</ListItem>
+			</Tooltip>
+			<Tooltip title='Profile' placement='right'>
+				<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
+					<ListItemNavLink
+						navlinkPath={PATH.BRANCH_PROFILE}
+						navlinkIcon={<FaRegUser />}
+						navlinkLabel='Profile'
+					/>
+				</ListItem>
+			</Tooltip>
+			<Tooltip title='Summary' placement='right'>
+				<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
+					<ListItemNavLink
+						navlinkPath={PATH.BRANCH_SUMMARY}
+						navlinkIcon={<FaListOl />}
+						navlinkLabel='Summary'
+					/>
+				</ListItem>
+			</Tooltip>
+			<Tooltip title='Settlement' placement='right'>
+				<ListItem sx={{ height: '50px', width: '100%', marginTop: '8px' }}>
+					<ListItemNavLink
+						navlinkPath={PATH.BRANCH_SETTLEMENT}
+						navlinkIcon={<FaScroll />}
+						navlinkLabel='Settlement'
+					/>
+				</ListItem>
+			</Tooltip>
 			{/* <button onClick={onLogout}>logout</button> */}
 		</List>
 	);

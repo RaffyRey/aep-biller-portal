@@ -1,6 +1,13 @@
-import { Box, Container, TextField, Typography } from '@mui/material';
+import {
+	Box,
+	CircularProgress,
+	Container,
+	TextField,
+	Typography,
+} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AllEasyLogo, Footer } from '../../components';
 import * as PATH from '../../constant/path';
 
@@ -34,7 +41,7 @@ function Login() {
 
 	useEffect(() => {
 		if (isError) {
-			console.log(message);
+			toast.error(message);
 		}
 
 		if (isSuccess || data) {
@@ -44,7 +51,7 @@ function Login() {
 		dispatch(reset);
 	}, [isError, isSuccess, data, dispatch, message, navigate]);
 
-	// signin submit button
+	// sign in submit button
 	const onSignIn = (e) => {
 		e.preventDefault();
 		const userData = {
@@ -52,10 +59,16 @@ function Login() {
 			password,
 		};
 
-		dispatch(login(userData));
+		if (userData.email === '') {
+			toast.error('Email is required');
+		} else if (userData.password === '') {
+			toast.error('Password is required');
+		} else {
+			dispatch(login(userData));
+		}
 	};
 
-	if (isLoading) return <h1>Loading...</h1>;
+	if (isLoading) return <CircularProgress />;
 
 	return (
 		<div className='form-container'>

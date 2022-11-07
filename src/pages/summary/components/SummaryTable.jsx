@@ -12,7 +12,7 @@ import { StyledTableCell } from '../../../style/style';
 
 export default function SummaryTable({ children }) {
 	return (
-		<Box sx={{ width: '100%', overflow: 'hidden' }} maxWidth={1200}>
+		<Box sx={{ width: '100%', overflow: 'hidden' }}>
 			<TableContainer
 				sx={{
 					width: '100%',

@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as PATH from './constant/path';
@@ -16,15 +15,6 @@ import Summary from './pages/summary/Summary';
 import Transaction from './pages/transaction/Transaction';
 
 function App() {
-	const navigate = useNavigate();
-	const { data } = useSelector((state) => state.auth);
-
-	// useEffect(() => {
-	// 	if (data =) {
-	// 		navigate(PATH.LOGIN);
-	// 	}
-	// }, [data]);
-
 	return (
 		<div className='page-container'>
 			<Routes>
