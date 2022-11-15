@@ -31,11 +31,11 @@ export const getBillerData = createAsyncThunk(
 // get biller daily transaction
 export const getDailyTransactionData = createAsyncThunk(
 	'/biller_admin/total_transactions/daily',
-	async (_, thunkAPI) => {
+	async (param, thunkAPI) => {
 		try {
 			const token = thunkAPI.getState().auth.data.token;
 			// console.log(token);
-			return await dataService.getDailyTransaction(token);
+			return await dataService.getDailyTransaction(param, token);
 		} catch (error) {
 			const message =
 				(error.response && error.response.data && error.response.data.message) ||

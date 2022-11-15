@@ -20,15 +20,15 @@ function App() {
 			<Routes>
 				<Route path={PATH.LOGIN} element={<Login />} />
 				<Route path={PATH.FORGOT_PASSWORD} element={<ForgotPassword />} />
-				<Route element={<ProtectedRoutes />}>
-					<Route index path={PATH.DASHBOARD} element={<Dashboard />} />
-					<Route path={PATH.MONITORING} element={<Monitoring />} />
-					<Route path={PATH.BRANCH_GROUP} element={<Groups />} />
-					<Route path={PATH.BRANCH_TRANSACTION} element={<Transaction />} />
-					<Route path={PATH.BRANCH_PROFILE} element={<Profile />} />
-					<Route path={PATH.BRANCH_SUMMARY} element={<Summary />} />
-					<Route path={PATH.BRANCH_SETTLEMENT} element={<Settlement />} />
-				</Route>
+				{/* <Route element={<ProtectedRoutes />}> */}
+				<Route index path={PATH.DASHBOARD} element={<Dashboard />} />
+				<Route path={PATH.MONITORING} element={<Monitoring />} />
+				<Route path={PATH.BRANCH_GROUP} element={<Groups />} />
+				<Route path={PATH.BRANCH_TRANSACTION} element={<Transaction />} />
+				<Route path={PATH.BRANCH_PROFILE} element={<Profile />} />
+				<Route path={PATH.BRANCH_SUMMARY} element={<Summary />} />
+				<Route path={PATH.BRANCH_SETTLEMENT} element={<Settlement />} />
+				{/* </Route> */}
 			</Routes>
 			<ToastContainer />
 		</div>
