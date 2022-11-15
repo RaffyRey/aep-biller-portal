@@ -11,28 +11,41 @@ import {
 	Typography,
 } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { WebLayout } from '../../components';
-import { useBillerQuery } from '../../features/biller/billerApi';
 import { StyledTableCell, StyledTableRow } from '../../style/style';
 import { formatPesos } from '../../utilities/formatCurrency';
 import { getFormattedDate } from '../../utilities/formatDate';
 
+// trying something
+import { useDispatch, useSelector } from 'react-redux';
+import { getMonitoringEndpoint } from '../../features/monitoring/monitoringSlice';
+
 function Monitoring() {
+	const dispatch = useDispatch();
+	const { monitoring, isLoading, isError } = useSelector((state) => state.data);
 	const [page, setPage] = useState(1);
-	const [params, setParams] = useState(
-		`transaction/v2?page=${page}&group_by=day`,
-	);
+	// const [params, setParams] = useState(
+	// 	`transaction/v2?page=${page}&group_by=day`,
+	// );
 
-	const { data, isFetching } = useBillerQuery(params);
+	const render = monitoring && monitoring.data.listings.collections;
 
-	let transaction = data && data.data.listings.collections;
+	React.useEffect(() => {
+		if (isError) {
+			alert('Error');
+		}
+		dispatch(getMonitoringEndpoint(page));
+	}, []);
 
-	let total_page = data && data.data.listings.meta.pagination.total_pages;
+	// let transaction = monitoring && monitoring.data.data.listings.collections;
+
+	let total_page =
+		monitoring && monitoring.data.data.listings.meta.pagination.total_pages;
 
 	const handleChange = (event, value) => {
 		setPage(value);
-		setParams(`transaction/v2?page=${value}&group_by=day`);
+		// setParams(`transaction/v2?page=${value}&group_by=day`);
 	};
 
 	return (
@@ -66,7 +79,7 @@ function Monitoring() {
 								</TableHead>
 
 								<TableBody sx={{ position: 'relative' }}>
-									{isFetching ? (
+									{isLoading ? (
 										<TableRow sx={{ width: '100%', position: 'relative' }}>
 											<TableCell>
 												<Skeleton variant='rectangular' width='100%' height='100%' />
@@ -82,9 +95,10 @@ function Monitoring() {
 											</TableCell>
 										</TableRow>
 									) : (
-										transaction.map((row) => (
+										monitoring &&
+										monitoring.data.data.listings.collections.map((row, index) => (
 											<StyledTableRow
-												key={row.transaction.transaction_id}
+												key={index}
 												sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 												<TableCell align='center' sx={{ fontSize: '14px' }}>
 													{getFormattedDate(row.created_at)}

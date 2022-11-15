@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import dataService from './dataService';
 
-// const data = JSON.parse(localStorage.getItem('data'))
-
 const initialState = {
 	isSuccess: false,
 	isLoading: false,
@@ -28,14 +26,14 @@ export const getBillerData = createAsyncThunk(
 	},
 );
 
-// get biller daily transaction
-export const getDailyTransactionData = createAsyncThunk(
-	'/biller_admin/total_transactions/daily',
-	async (param, thunkAPI) => {
+// get trasnsaction endpoint
+export const getTransactionEndpoint = createAsyncThunk(
+	'/biller_admin/data',
+	async (_, thunkAPI) => {
 		try {
 			const token = thunkAPI.getState().auth.data.token;
 			// console.log(token);
-			return await dataService.getDailyTransaction(token, param);
+			return await dataService.getTransactionData(token, _);
 		} catch (error) {
 			const message =
 				(error.response && error.response.data && error.response.data.message) ||
@@ -46,50 +44,13 @@ export const getDailyTransactionData = createAsyncThunk(
 	},
 );
 
-// get biller monthly transaction
-export const getMonthlyTransactionData = createAsyncThunk(
-	'/biller_admin/total_transactions/monthly',
+export const getChartQuery = createAsyncThunk(
+	'/biller_admin/chart',
 	async (_, thunkAPI) => {
 		try {
 			const token = thunkAPI.getState().auth.data.token;
 			// console.log(token);
-			return await dataService.getMonthlyTransaction(token);
-		} catch (error) {
-			const message =
-				(error.response && error.response.data && error.response.data.message) ||
-				error.message ||
-				error.toString();
-			return thunkAPI.rejectWithValue(message);
-		}
-	},
-);
-
-// get biller yearly transaction
-export const getYearlyTransactionData = createAsyncThunk(
-	'/biller_admin/total_transactions/yearly',
-	async (_, thunkAPI) => {
-		try {
-			const token = thunkAPI.getState().auth.data.token;
-			// console.log(token);
-			return await dataService.getYearlyTransaction(token);
-		} catch (error) {
-			const message =
-				(error.response && error.response.data && error.response.data.message) ||
-				error.message ||
-				error.toString();
-			return thunkAPI.rejectWithValue(message);
-		}
-	},
-);
-
-// get biller to date transaction
-export const getToDateTransactionData = createAsyncThunk(
-	'/biller_admin/total_transactions/to_date',
-	async (_, thunkAPI) => {
-		try {
-			const token = thunkAPI.getState().auth.data.token;
-			// console.log(token);
-			return await dataService.getToDateTransaction(token);
+			return await dataService.getChartData(token, _);
 		} catch (error) {
 			const message =
 				(error.response && error.response.data && error.response.data.message) ||
@@ -123,58 +84,30 @@ export const dataSlice = createSlice({
 				state.isError = true;
 				state.message = action.payload;
 			})
-			// daily transaction
-			.addCase(getDailyTransactionData.pending, (state) => {
+			// transaaction
+			.addCase(getTransactionEndpoint.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(getDailyTransactionData.fulfilled, (state, action) => {
+			.addCase(getTransactionEndpoint.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.isSuccess = true;
-				state.daily = action.payload;
+				state.data = action.payload;
 			})
-			.addCase(getDailyTransactionData.rejected, (state, action) => {
+			.addCase(getTransactionEndpoint.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
 				state.message = action.payload;
 			})
-			// monthly transaction
-			.addCase(getMonthlyTransactionData.pending, (state) => {
+			// chart
+			.addCase(getChartQuery.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(getMonthlyTransactionData.fulfilled, (state, action) => {
+			.addCase(getChartQuery.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.isSuccess = true;
-				state.monthly = action.payload;
+				state.chart = action.payload;
 			})
-			.addCase(getMonthlyTransactionData.rejected, (state, action) => {
-				state.isLoading = false;
-				state.isError = true;
-				state.message = action.payload;
-			})
-			// yearly transaction
-			.addCase(getYearlyTransactionData.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(getYearlyTransactionData.fulfilled, (state, action) => {
-				state.isLoading = false;
-				state.isSuccess = true;
-				state.yearly = action.payload;
-			})
-			.addCase(getYearlyTransactionData.rejected, (state, action) => {
-				state.isLoading = false;
-				state.isError = true;
-				state.message = action.payload;
-			})
-			// to date transaction
-			.addCase(getToDateTransactionData.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(getToDateTransactionData.fulfilled, (state, action) => {
-				state.isLoading = false;
-				state.isSuccess = true;
-				state.toDate = action.payload;
-			})
-			.addCase(getToDateTransactionData.rejected, (state, action) => {
+			.addCase(getChartQuery.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
 				state.message = action.payload;
