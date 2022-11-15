@@ -35,7 +35,7 @@ export const getDailyTransactionData = createAsyncThunk(
 		try {
 			const token = thunkAPI.getState().auth.data.token;
 			// console.log(token);
-			return await dataService.getDailyTransaction(param, token);
+			return await dataService.getDailyTransaction(token, param);
 		} catch (error) {
 			const message =
 				(error.response && error.response.data && error.response.data.message) ||
@@ -105,7 +105,7 @@ export const dataSlice = createSlice({
 	name: 'data',
 	initialState,
 	reducers: {
-		reset: (state) => initialState,
+		reset: (state) => state.initialState,
 	},
 	extraReducers: (builder) => {
 		builder

@@ -30,7 +30,7 @@ const getDailyTransaction = async (token, param) => {
 
 	// send get request to server
 	const response = await axios.get(
-		TRANSACTION_DAILY_API + `/total_transactions?group_by=${param}`,
+		TRANSACTION_DAILY_API + `total_transactions?group_by=${param}`,
 		config,
 	);
 	return response.data;
