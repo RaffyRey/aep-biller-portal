@@ -1,30 +1,34 @@
-import {
-	Box,
-	CircularProgress,
-	Divider,
-	Skeleton,
-	TableCell,
-	TableRow,
-} from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Divider, Skeleton, TableCell, TableRow } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { WebLayout } from '../../components';
-import {
-	useBillerQuery,
-	useProfileQuery,
-} from '../../features/biller/billerApi';
 import { Data } from './components/Data';
 import DataCard from './components/DataCard';
 import Filters from './components/Filters';
 import ProfileCard from './components/ProfileCard';
 
-export default function Profile() {
-	const [page, setPage] = useState(1);
-	const [params, setParams] = useState(`biller?page=${page}`);
-	const { data, isFetching } = useBillerQuery(params);
-	const [searchData, setSearchData] = useState('');
+// new imports
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getBillerProfile,
+	getBillers,
+} from '../../features/biller_group/billerSlice';
 
-	let billers = data && data.data.listings.billers;
-	let total_page = data && data.data.listings.meta.pagination.total_pages;
+export default function Profile() {
+	const dispatch = useDispatch();
+	const {
+		profile,
+		isLoading: profileLoading,
+		isError: profileError,
+	} = useSelector((state) => state.biller);
+	const {
+		billers,
+		isLoading: billersLoading,
+		isError: billersError,
+	} = useSelector((state) => state.biller);
+
+	const [page, setPage] = useState(1);
+	const [params, setParams] = useState(`page=${page}`);
+	const [searchData, setSearchData] = useState('');
 
 	const handleChange = (e, value) => {
 		e.preventDefault();
@@ -34,9 +38,7 @@ export default function Profile() {
 
 	const [billerParams, setBillerParams] = useState(0);
 
-	let billerId = data && data.data.listings.billers[billerParams].id;
-
-	const { data: biller, isFetching: billerFetching } = useProfileQuery(billerId);
+	let billerId = billers && billers.data.listings.billers[billerParams].id;
 
 	// search
 	const searchOnClick = (e) => {
@@ -45,9 +47,14 @@ export default function Profile() {
 		if (!searchData) {
 			setBillerParams(`${billerId}`);
 		} else {
-			setParams(`biller?page=${page}&keyword=${searchData}`);
+			setParams(`page=${page}&keyword=${searchData}`);
 		}
 	};
+
+	useEffect(() => {
+		dispatch(getBillers(params));
+		dispatch(getBillerProfile(billerId));
+	}, [dispatch, params, billerId]);
 
 	return (
 		<WebLayout>
@@ -68,15 +75,18 @@ export default function Profile() {
 				<Divider orientation='horizontal' sx={{ marginBottom: 2 }} flexItem />
 				{/* data */}
 				<Box width='100%' height='100%' overflow='hidden' display='flex'>
-					<Data onCount={total_page} handleChange={handleChange}>
-						{isFetching ? (
+					<Data
+						onCount={billers && billers.data.listings.meta.pagination.total_pages}
+						handleChange={handleChange}>
+						{billersLoading ? (
 							<TableRow sx={{ width: '100%', position: 'relative' }}>
 								<TableCell>
 									<Skeleton variant='rectangular' width='100%' height='100%' />
 								</TableCell>
 							</TableRow>
 						) : (
-							billers.map((res, index) => (
+							billers &&
+							billers.data.listings.billers.map((res, index) => (
 								<TableRow key={res.id}>
 									<TableCell>
 										<DataCard
@@ -92,75 +102,75 @@ export default function Profile() {
 					</Data>
 					<ProfileCard
 						profileImg={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
 							) : (
-								biller && biller.data.billers.logo
+								profile && profile.data.billers.logo
 							)
 						}
 						profileName={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
 							) : (
-								biller && biller.data.billers.name
+								profile && profile.data.billers.name
 							)
 						}
 						profileCompany={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
 							) : (
-								biller && biller.data.billers.name
+								profile && profile.data.billers.name
 							)
 						}
 						profileCategory={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
 							) : (
-								biller && biller.data.billers.category
+								profile && profile.data.billers.category
 							)
 						}
 						profileStatus={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
-							) : biller && biller.data.billers.is_live === 0 ? (
+							) : profile && profile.data.billers.is_live === 0 ? (
 								'InActive'
 							) : (
 								'Active'
 							)
 						}
 						profileFee={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
 							) : (
-								biller && biller.data.billers.ae_system_fee
+								profile && profile.data.billers.ae_system_fee
 							)
 						}
 						profileConvenience={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
 							) : (
-								biller && biller.data.billers.fee
+								profile && profile.data.billers.fee
 							)
 						}
 						profileContact={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
 							) : (
-								biller && biller.data.billers.contact_person
+								profile && profile.data.billers.contact_person
 							)
 						}
 						profileNumber={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
 							) : (
-								biller && biller.data.billers.contact_no
+								profile && profile.data.billers.contact_no
 							)
 						}
 						profileEmail={
-							billerFetching ? (
+							profileLoading ? (
 								<ProfileDataLoader />
 							) : (
-								biller && biller.data.billers.contact_email
+								profile && profile.data.billers.contact_email
 							)
 						}
 					/>

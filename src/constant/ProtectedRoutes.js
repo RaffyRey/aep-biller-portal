@@ -1,24 +1,26 @@
-import jwtDecode from 'jwt-decode';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import * as PATH from '../constant/path';
-import { reset } from '../features/auth/authSlice';
+import { logout, reset } from '../features/auth/authSlice';
 
 export const ProtectedRoutes = () => {
 	const dispatch = useDispatch();
-	let navigate = useNavigate();
-	const location = useLocation();
 	const { data } = useSelector((state) => state.auth);
-	let jwt_token = data && data.token;
-	var decoded = jwtDecode(jwt_token);
-
-	let exp = new Date(decoded.exp * 1000);
+	let user_type = data?.data.profile_type;
 
 	useEffect(() => {
-		// console.log(JSON.stringify(data));
-		// console.log(exp);
-	}, []);
+		if (user_type !== 'BillerGroupAdmin') {
+			dispatch(reset());
+			dispatch(logout());
+			console.log('Invalid User Type');
+			<Navigate to={PATH.LOGIN} />;
+		}
+	}, [dispatch, user_type]);
+
+	if (data === undefined) {
+		return null;
+	}
 
 	return data ? <Outlet /> : <Navigate to={PATH.LOGIN} />;
 };

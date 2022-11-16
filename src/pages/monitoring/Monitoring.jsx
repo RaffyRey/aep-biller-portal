@@ -23,29 +23,22 @@ import { getMonitoringEndpoint } from '../../features/monitoring/monitoringSlice
 
 function Monitoring() {
 	const dispatch = useDispatch();
-	const { monitoring, isLoading, isError } = useSelector((state) => state.data);
+	const { monitor, isLoading, isError } = useSelector(
+		(state) => state.monitoring,
+	);
 	const [page, setPage] = useState(1);
-	// const [params, setParams] = useState(
-	// 	`transaction/v2?page=${page}&group_by=day`,
-	// );
-
-	const render = monitoring && monitoring.data.listings.collections;
+	const [params, setParams] = useState(page);
 
 	React.useEffect(() => {
 		if (isError) {
 			alert('Error');
 		}
-		dispatch(getMonitoringEndpoint(page));
-	}, []);
-
-	// let transaction = monitoring && monitoring.data.data.listings.collections;
-
-	let total_page =
-		monitoring && monitoring.data.data.listings.meta.pagination.total_pages;
+		dispatch(getMonitoringEndpoint(params));
+	}, [dispatch, isError, params]);
 
 	const handleChange = (event, value) => {
 		setPage(value);
-		// setParams(`transaction/v2?page=${value}&group_by=day`);
+		setParams(value);
 	};
 
 	return (
@@ -77,7 +70,6 @@ function Monitoring() {
 										<StyledTableCell align='center'>Name</StyledTableCell>
 									</TableRow>
 								</TableHead>
-
 								<TableBody sx={{ position: 'relative' }}>
 									{isLoading ? (
 										<TableRow sx={{ width: '100%', position: 'relative' }}>
@@ -95,8 +87,8 @@ function Monitoring() {
 											</TableCell>
 										</TableRow>
 									) : (
-										monitoring &&
-										monitoring.data.data.listings.collections.map((row, index) => (
+										monitor &&
+										monitor.data.listings.collections.map((row, index) => (
 											<StyledTableRow
 												key={index}
 												sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -130,7 +122,7 @@ function Monitoring() {
 						justifyContent='center'>
 						<Pagination
 							// page={page}
-							count={total_page}
+							count={monitor && monitor.data.listings.meta.pagination.total_pages}
 							size='small'
 							showFirstButton
 							showLastButton

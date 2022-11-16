@@ -8,34 +8,51 @@ import {
 	TableCell,
 	TableRow,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TablePagination, WebLayout } from '../../components';
-import {
-	useBillerQuery,
-	useListingParamsQuery,
-} from '../../features/biller/billerApi';
 import { StyledTableCell, StyledTableRow } from '../../style/style';
 import { getFormattedDateTwo } from '../../utilities/formatDate';
 import Filters from './components/Filters';
 import TransactionTable from './components/TransactionTable';
 
+// new imports
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getListings,
+	getTransactions,
+} from '../../features/biller_group/billerSlice';
+
 export default function Transaction() {
+	const dispatch = useDispatch();
+	const {
+		listings,
+		isLoading: listingsLoading,
+		isError: listingsError,
+		message: listingsMessage,
+	} = useSelector((state) => state.biller);
+
+	const {
+		transactions,
+		isLoading: transactionsLoading,
+		isError: transactionsError,
+		message: transactionsMessage,
+	} = useSelector((state) => state.biller);
+
 	const [page, setPage] = useState(1);
-	const [params, setParams] = useState(`transaction/v2?page=${page}`);
+	const [params, setParams] = useState(`page=${page}`);
 	const [selectValue, setSelectValue] = useState('');
 	const [dateRange, setDateRange] = useState([]);
 	const [startDate, endDate] = dateRange;
 	const [searchData, setSearchData] = useState('');
 
-	const { data, isFetching } = useBillerQuery(params);
-	const { data: listings, isFetching: listingFeching } = useListingParamsQuery();
-
-	let transaction = data && data.data.listings.collections;
-	let total_page = data && data.data.listings.meta.pagination.total_pages;
+	useEffect(() => {
+		dispatch(getListings());
+		dispatch(getTransactions(params));
+	}, [dispatch, params]);
 
 	const onPagination = (event, value) => {
 		setPage(value);
-		setParams(`transaction/v2?page=${value}`);
+		setParams(`page=${value}`);
 	};
 
 	// biller filter
@@ -44,9 +61,7 @@ export default function Transaction() {
 		// setActiveLoopButton(true);
 		let newStartDate = getFormattedDateTwo(dateRange[0]);
 		let newEndDate = getFormattedDateTwo(dateRange[1]);
-		setParams(
-			`transaction/v2?from=${newStartDate}&to=${newEndDate}&page=${page}`,
-		);
+		setParams(`from=${newStartDate}&to=${newEndDate}&page=${page}`);
 	};
 
 	// search
@@ -54,9 +69,9 @@ export default function Transaction() {
 		e.preventDefault();
 
 		if (!searchData) {
-			setParams(`transaction/v2?page=${page}`);
+			setParams(`page=${page}`);
 		} else {
-			setParams(`transaction/v2?page=1&keyword=${searchData}`);
+			setParams(`page=1&keyword=${searchData}`);
 		}
 	};
 
@@ -72,7 +87,7 @@ export default function Transaction() {
 				<Box height='100%' width='100%' display='flex' flexDirection='column'>
 					<Filters
 						selectChildren={
-							listingFeching ? (
+							listingsLoading ? (
 								<CircularProgress size={16} />
 							) : (
 								listings &&
@@ -98,7 +113,7 @@ export default function Transaction() {
 					<Divider orientation='horizontal' sx={{ marginBottom: 2 }} />
 					<Box width='100%' height='100%' overflow='hidden'>
 						<TransactionTable>
-							{isFetching ? (
+							{transactionsLoading ? (
 								<TableRow sx={{ width: '100%', position: 'relative' }}>
 									<TableCell>
 										<Skeleton variant='rectangular' width='100%' height='100%' />
@@ -120,7 +135,8 @@ export default function Transaction() {
 									</TableCell>
 								</TableRow>
 							) : (
-								transaction.map((row) => (
+								transactions &&
+								transactions.data.listings.collections.map((row) => (
 									<StyledTableRow
 										key={row.refno}
 										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -146,7 +162,12 @@ export default function Transaction() {
 								))
 							)}
 						</TransactionTable>
-						<TablePagination total_page={total_page} handleChange={onPagination} />
+						<TablePagination
+							total_page={
+								transactions && transactions.data.listings.meta.pagination.total_pages
+							}
+							handleChange={onPagination}
+						/>
 					</Box>
 				</Box>
 			</Box>

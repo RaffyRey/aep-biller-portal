@@ -19,8 +19,8 @@ const getMonitoringData = async (token, page) => {
 	return response.data;
 };
 
-const dataService = {
+const monitoringService = {
 	getMonitoringData,
 };
 
-export default dataService;
+export default monitoringService;

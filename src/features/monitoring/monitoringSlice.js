@@ -10,7 +10,7 @@ const initialState = {
 
 // get trasnsaction endpoint
 export const getMonitoringEndpoint = createAsyncThunk(
-	'/monitoring',
+	'/biller_admin/monitoring',
 	async (_, thunkAPI) => {
 		try {
 			const token = thunkAPI.getState().auth.data.token;
@@ -42,7 +42,7 @@ export const monitoringSlice = createSlice({
 			.addCase(getMonitoringEndpoint.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.isSuccess = true;
-				state.data = action.payload;
+				state.monitor = action.payload;
 			})
 			.addCase(getMonitoringEndpoint.rejected, (state, action) => {
 				state.isLoading = false;
