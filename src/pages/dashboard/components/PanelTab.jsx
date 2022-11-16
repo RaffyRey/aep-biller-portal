@@ -49,7 +49,7 @@ const PanelTab = ({
 					startDate={startDate}
 					endDate={endDate}
 					onChange={dataPickerOnChange}
-					isClearable={true}
+					// isClearable={true}
 					className='input-datePicker'
 				/>
 				<IconButton color='primary' onClick={datePickerOnClick}>

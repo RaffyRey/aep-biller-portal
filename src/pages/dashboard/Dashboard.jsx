@@ -1,69 +1,96 @@
 import { Box, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
 import { WebLayout } from '../../components';
-import {
-	useChartLoopParamsQuery,
-	useChartParamsQuery,
-	useTotalParamsQuery,
-} from '../../features/biller/billerApi';
 import { formatPesos } from '../../utilities/formatCurrency';
 import { getFormattedDateTwo } from '../../utilities/formatDate';
-import { numberWithCommas } from '../../utilities/formatNumberWithComma';
 import PanelTab from './components/PanelTab';
 import TransactionChart from './components/TransactionChart';
 import { TransactionData } from './components/TransactionData';
 
+// trying something
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getChartQuery,
+	getTransactionEndpoint,
+} from '../../features/data/dataSlice';
+
 function Dashboard() {
+	// trying something
+	const dispatch = useDispatch();
+	const { data, isLoading, isError, message } = useSelector(
+		(state) => state.data,
+	);
+
+	const { chart, isLoading: isChartLoading } = useSelector(
+		(state) => state.data,
+	);
+
+	React.useEffect(() => {
+		if (isError) {
+			console.log(message);
+		}
+		console.log(data);
+		dispatch(getTransactionEndpoint('day'));
+		dispatch(getChartQuery('group_by=day'));
+	}, [isError, message, dispatch]);
+
 	// transaction
 	const [value, setValue] = useState(0);
 	const [dateRange, setDateRange] = useState([]);
 	const [startDate, endDate] = dateRange;
-	const [transactionParams, setTransactionParams] = useState('day');
 	const [chartParams, setChartParams] = useState('day');
-	const [dateRangeParams, setDateRangeParams] = useState();
 	const [activeLoopButton, setActiveLoopButton] = useState(false);
-
-	// transaction params
-	const { data: transaction, isFetching: transactionFetching } =
-		useTotalParamsQuery(transactionParams);
-
-	// chart params
-	const { data: chart, isFetching: chartFetching } =
-		useChartParamsQuery(chartParams);
-
-	const { data: loop, isFetching: rangeFetching } =
-		useChartLoopParamsQuery(dateRangeParams);
 
 	const handleChange = (event, newValue) => {
 		event.preventDefault();
 		setValue(newValue);
 	};
 
-	const onDaily = (e) => {
+	const onDaily = async (e) => {
 		e.preventDefault();
 		setActiveLoopButton(false);
-		setTransactionParams(`day`);
-		setChartParams(`day`);
+		try {
+			dispatch(getTransactionEndpoint('day'));
+			dispatch(getChartQuery('group_by=day'));
+			setChartParams(`day`);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
-	const onMonthly = (e) => {
+	const onMonthly = async (e) => {
 		e.preventDefault();
 		setActiveLoopButton(false);
-		setTransactionParams(`month`);
-		setChartParams(`month`);
+		try {
+			dispatch(getTransactionEndpoint('month'));
+			dispatch(getChartQuery('group_by=month'));
+			setChartParams('month');
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
-	const onYearly = (e) => {
+	const onYearly = async (e) => {
 		e.preventDefault();
 		setActiveLoopButton(false);
-		setTransactionParams(`year`);
-		setChartParams(`year`);
+		try {
+			dispatch(getTransactionEndpoint('year'));
+			dispatch(getChartQuery('group_by=year'));
+			setChartParams('year');
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const onToDate = (e) => {
 		e.preventDefault();
+		e.preventDefault();
 		setActiveLoopButton(false);
-		setTransactionParams(`to_date`);
+		try {
+			dispatch(getTransactionEndpoint('to_date'));
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const onDateRangePicker = (e) => {
@@ -72,25 +99,28 @@ function Dashboard() {
 		let newStartDate = getFormattedDateTwo(dateRange[0]);
 		let newEndDate = getFormattedDateTwo(dateRange[1]);
 
-		if (dateRange === null) {
-			return rangeFetching;
+		console.log(dateRange.length === 0);
+
+		if (dateRange.length === 0) {
+			dispatch(getChartQuery('group_by=day'));
+			setChartParams('day');
+			console.log('Insert Date');
 		} else {
-			setDateRangeParams(`from=${newStartDate}&to=${newEndDate}`);
+			dispatch(getChartQuery(`from=${newStartDate}&to=${newEndDate}`));
 		}
 	};
 
 	// date picker chart shown
 	let dateLoop =
 		dateRange === []
-			? rangeFetching
-			: loop && loop.data.aggregate.map((res) => res.day);
+			? isChartLoading
+			: chart && chart.data.aggregate.map((res) => res.day);
 
 	let chartLoop =
 		dateRange === []
-			? rangeFetching
-			: loop && loop.data.aggregate.map((res) => res.revenue);
+			? isChartLoading
+			: chart && chart.data.aggregate.map((res) => res.revenue);
 
-	// console.log(loop);
 	// chart data
 	// filter data
 	let filterGroup =
@@ -100,7 +130,7 @@ function Dashboard() {
 			? chart && chart.data.aggregate.map((res) => res.month)
 			: chartParams === 'year'
 			? chart && chart.data.aggregate.map((res) => res.year)
-			: chartFetching;
+			: isChartLoading;
 
 	let filterChart = chart && chart.data.aggregate.map((res) => res.revenue);
 
@@ -138,18 +168,17 @@ function Dashboard() {
 				<TransactionData
 					panelvalue={value}
 					countData={
-						transactionFetching ? (
+						isLoading ? (
 							<CircularProgress size={16} />
 						) : (
-							numberWithCommas(transaction && transaction.data.aggregate[0].count)
-							// transaction && transaction.data.aggregate[0].count
+							<>{data && data.data.aggregate[0].count}</>
 						)
 					}
 					amountData={
-						transactionFetching ? (
+						isLoading ? (
 							<CircularProgress size={16} />
 						) : (
-							formatPesos(transaction && transaction.data.aggregate[0].revenue)
+							<>{formatPesos(data && data.data.aggregate[0].revenue)}</>
 						)
 					}>
 					<PanelTab
@@ -167,6 +196,7 @@ function Dashboard() {
 						datePickerOnClick={onDateRangePicker}
 					/>
 				</TransactionData>
+
 				{/* right box */}
 				<Box
 					width='100%'
@@ -174,7 +204,7 @@ function Dashboard() {
 					display='flex'
 					alignItems='center'
 					justifyContent='center'>
-					{chartFetching || rangeFetching ? (
+					{isChartLoading ? (
 						<CircularProgress />
 					) : (
 						<TransactionChart chartData={chartData} />

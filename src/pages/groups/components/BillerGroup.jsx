@@ -1,10 +1,16 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
-import React from 'react';
-import { useAdminQuery } from '../../../features/biller/billerApi';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBillerGroupAdmin } from '../../../features/biller_group/billerSlice';
 
 // biller data
 const BillerGroup = () => {
-	const { data, isFetching } = useAdminQuery();
+	const dispatch = useDispatch();
+	const { biller, isLoading, isError } = useSelector((state) => state.biller);
+
+	useEffect(() => {
+		dispatch(getBillerGroupAdmin());
+	}, []);
 
 	return (
 		<Box
@@ -18,30 +24,30 @@ const BillerGroup = () => {
 				<DataCard
 					dataLabel='Group name'
 					cardData={
-						isFetching ? (
+						isLoading ? (
 							<CircularProgress color='primary' size={15} />
 						) : (
-							data && data.data.group.name
+							biller && biller.data.group.name
 						)
 					}
 				/>
 				<DataCard
 					dataLabel='Biller count'
 					cardData={
-						isFetching ? (
+						isLoading ? (
 							<CircularProgress color='primary' size={15} />
 						) : (
-							data && data.data.group.biller_count
+							biller && biller.data.group.biller_count
 						)
 					}
 				/>
 				<DataCard
 					dataLabel='Group Admin email'
 					cardData={
-						isFetching ? (
+						isLoading ? (
 							<CircularProgress color='primary' size={15} />
 						) : (
-							data && data.data.group.contact_email
+							biller && biller.data.group.contact_email
 						)
 					}
 				/>
@@ -50,23 +56,23 @@ const BillerGroup = () => {
 				<DataCard
 					dataLabel='Group Admin Mobile'
 					cardData={
-						isFetching ? (
+						isLoading ? (
 							<CircularProgress color='primary' size={15} />
 						) : (
-							data && data.data.group.contact_number
+							biller && biller.data.group.contact_number
 						)
 					}
 				/>
 				<DataCard
 					dataLabel='Group Admin'
 					cardData={
-						isFetching ? (
+						isLoading ? (
 							<CircularProgress color='primary' size={15} />
 						) : (
-							data &&
-							data.data.group.contact_first_name +
+							biller &&
+							biller.data.group.contact_first_name +
 								' ' +
-								data.data.group.contact_last_name
+								biller.data.group.contact_last_name
 						)
 					}
 				/>

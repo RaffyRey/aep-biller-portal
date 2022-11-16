@@ -1,13 +1,22 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
-import React from 'react';
-import { useBillerQuery } from '../../../features/biller/billerApi';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSummary } from '../../../features/summary/summarySlice';
 import { formatPesos } from '../../../utilities/formatCurrency';
-import { numberWithCommas } from '../../../utilities/formatNumberWithComma';
 
 // summary total
 const Summary = () => {
-	let params = 'summary';
-	const { data, isFetching } = useBillerQuery(params);
+	const dispatch = useDispatch();
+	const { summary, isLoading, isError, message } = useSelector(
+		(state) => state.summary,
+	);
+
+	useEffect(() => {
+		if (isError) {
+			alert(message);
+		}
+		dispatch(getSummary());
+	}, [dispatch, message, isError]);
 
 	return (
 		<Box
@@ -19,20 +28,20 @@ const Summary = () => {
 			<BillerGroupCard
 				cardLabel='Group Total Transaction Count'
 				cardData={
-					isFetching ? (
+					isLoading ? (
 						<CircularProgress color='warning' size={15} />
 					) : (
-						numberWithCommas(data && data.data.total[0].count)
+						<>{summary && summary.data.total[0].count}</>
 					)
 				}
 			/>
 			<BillerGroupCard
 				cardLabel='Group Total Collection'
 				cardData={
-					isFetching ? (
+					isLoading ? (
 						<CircularProgress color='warning' size={15} />
 					) : (
-						formatPesos(data && data.data.total[0].revenue)
+						formatPesos(summary && summary.data.total[0].revenue)
 					)
 				}
 			/>
@@ -48,7 +57,6 @@ function BillerGroupCard({ cardLabel, cardData }) {
 			height={100}
 			borderRadius={3}
 			flexDirection='column'
-			// alignItems='center'
 			justifyContent='center'
 			bgcolor='#0e3553'
 			marginY={1}

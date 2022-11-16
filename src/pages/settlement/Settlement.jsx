@@ -6,12 +6,8 @@ import {
 	Skeleton,
 	TableRow,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TablePagination, WebLayout } from '../../components';
-import {
-	useBillerQuery,
-	useListingParamsQuery,
-} from '../../features/biller/billerApi';
 import { StyledTableRow } from '../../style/style';
 import { formatPesos } from '../../utilities/formatCurrency';
 import { getFormattedDateTwo } from '../../utilities/formatDate';
@@ -22,35 +18,54 @@ import Loading from './components/Loading';
 import ProfileCard from './components/ProfileCard';
 import SettlementTable from './components/SettlementTable';
 
+// new imports
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getListings,
+	getSettlement,
+} from '../../features/biller_group/billerSlice';
+
 export default function Settlement() {
+	const dispatch = useDispatch();
+	const {
+		settlement,
+		isLoading: settlementLoading,
+		isError: settlementError,
+	} = useSelector((state) => state.biller);
+
+	const {
+		listings,
+		isLoading: listingsLoading,
+		isError: listingsError,
+	} = useSelector((state) => state.biller);
+
 	const [page, setPage] = useState(1);
-	const [billerParams, setBillerParams] = useState(`settlement?page=${page}`);
+	const [settlementParams, setSettlementParams] = useState(`page=${page}`);
 	const [selectValue, setSelectValue] = useState('');
 
-	const { data: billerData, isFetching } = useBillerQuery(billerParams);
+	// let total_page =
+	// 	billerData && billerData.data.listings.meta.pagination.total_pages;
 
-	// listings params
-	const { data: listingsData, isFetching: listingsFetching } =
-		useListingParamsQuery();
-
-	let total_page =
-		billerData && billerData.data.listings.meta.pagination.total_pages;
-
-	let transaction_fee =
-		billerData &&
-		billerData.data.total[0].totalBillerFee / billerData.data.total[0].count;
+	// let transaction_fee =
+	// 	billerData &&
+	// 	billerData.data.total[0].totalBillerFee / billerData.data.total[0].count;
 
 	// biller filter
 	const onFilter = (e) => {
 		e.preventDefault();
-		setBillerParams(`settlement?biller=${selectValue}`);
+		setSettlementParams(`biller=${selectValue}`);
 	};
 
 	// pagination
 	const onPagination = (event, value) => {
 		setPage(value);
-		setBillerParams(`settlement?page=${value}`);
+		setSettlementParams(`page=${value}`);
 	};
+
+	useEffect(() => {
+		dispatch(getListings());
+		dispatch(getSettlement(settlementParams));
+	}, [dispatch, settlementParams]);
 
 	return (
 		<WebLayout>
@@ -65,11 +80,10 @@ export default function Settlement() {
 				paddingX={2}>
 				<Filters
 					selectChildren={
-						listingsFetching ? (
+						listingsLoading ? (
 							<CircularProgress size={16} />
 						) : (
-							listingsData &&
-							listingsData.data.listings.billers.map((res) => (
+							listings?.data.listings.billers.map((res) => (
 								<MenuItem key={res.id} value={res.code} sx={{ width: 200 }}>
 									{res.name}
 								</MenuItem>
@@ -84,67 +98,65 @@ export default function Settlement() {
 				<Box width='100%' height='fit-content'>
 					<ProfileCard
 						profileName={
-							isFetching ? (
+							settlementLoading ? (
 								<Skeleton width={250} height={30} sx={{ marginLeft: 1 }} />
 							) : (
-								billerData && billerData.data.billers.name
+								settlement?.data.billers.name
 							)
 						}
 						profileTransactionDate={
-							isFetching ? (
+							settlementLoading ? (
 								<Skeleton width={250} height={30} sx={{ marginLeft: 1 }} />
 							) : (
-								billerData && billerData.data.total[0].date
+								settlement?.data.total[0].date
 							)
 						}
 						profileTransactionCount={
-							isFetching ? (
+							settlementLoading ? (
 								<Skeleton width={250} height={30} sx={{ marginLeft: 1 }} />
 							) : (
-								numberWithCommas(billerData && billerData.data.total[0].count)
+								settlement?.data.total[0].count
 							)
 						}
 						profileTransactionAmount={
-							isFetching ? (
+							settlementLoading ? (
 								<Skeleton width={250} height={30} sx={{ marginLeft: 1 }} />
 							) : (
-								formatPesos(billerData && billerData.data.total[0].revenue)
+								formatPesos(settlement?.data.total[0].revenue)
 							)
 						}
 						profileTransactionFee={
-							isFetching ? (
+							settlementLoading ? (
 								<Skeleton width={250} height={30} sx={{ marginLeft: 1 }} />
 							) : (
-								formatPesos(transaction_fee)
+								formatPesos(settlement?.data.total[0].transaction_fee)
 							)
 						}
 						profileTotalTransactionFee={
-							isFetching ? (
+							settlementLoading ? (
 								<Skeleton width={250} height={30} sx={{ marginLeft: 1 }} />
 							) : (
-								formatPesos(billerData && billerData.data.total[0].totalBillerFee)
+								formatPesos(settlement?.data.total[0].totalBillerFee)
 							)
 						}
 						profileSettlementAmount={
-							isFetching ? (
+							settlementLoading ? (
 								<Skeleton width={250} height={30} sx={{ marginLeft: 1 }} />
 							) : (
-								formatPesos(billerData && billerData.data.total[0].totalSettlement)
+								formatPesos(settlement?.data.total[0].totalSettlement)
 							)
 						}
 					/>
 					<Divider orientation='horizontal' sx={{ marginY: 2 }} flexItem />
-					{/* table */}
 					<SettlementTable>
-						{isFetching ? (
+						{settlementLoading ? (
 							<TableRow sx={{ width: '100%', position: 'relative' }}>
 								<Loading />
 							</TableRow>
 						) : (
-							billerData &&
-							billerData.data.listings.data.map((row) => (
+							settlement?.data.listings.data.map((row, index) => (
 								<StyledTableRow
-									key={row.ae_refno}
+									key={index}
 									sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 									<DataRow
 										dataOne={getFormattedDateTwo(row.created_at)}
@@ -159,7 +171,10 @@ export default function Settlement() {
 							))
 						)}
 					</SettlementTable>
-					<TablePagination total_page={total_page} handleChange={onPagination} />
+					<TablePagination
+						total_page={settlement?.data.listings.meta.pagination.total_pages}
+						handleChange={onPagination}
+					/>
 				</Box>
 			</Box>
 		</WebLayout>

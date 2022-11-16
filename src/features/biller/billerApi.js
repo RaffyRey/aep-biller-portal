@@ -4,15 +4,15 @@ export const billerApi = createApi({
 	reducerPath: 'billerApi',
 	baseQuery: fetchBaseQuery({
 		baseUrl: `${process.env.REACT_APP_BILLER_PROD}`,
+		credentials: 'include',
 		prepareHeaders: (headers, { getState }) => {
-			const token = getState().auth.data.token;
+			const token = getState().auth.token;
 
 			if (token) {
-				headers.set('Authorization', `Bearer ${token}`);
+				headers.set('authorization', `Bearer ${token}`);
 			}
 			return headers;
 		},
-		// credentials: 'include',
 	}),
 	endpoints: (builder) => ({
 		// biller group admin

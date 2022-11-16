@@ -1,17 +1,26 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, Outlet } from 'react-router-dom';
 import * as PATH from '../constant/path';
+import { logout, reset } from '../features/auth/authSlice';
 
 export const ProtectedRoutes = () => {
-	let navigate = useNavigate();
+	const dispatch = useDispatch();
 	const { data } = useSelector((state) => state.auth);
+	let user_type = data?.data.profile_type;
 
 	useEffect(() => {
-		if (data === undefined) {
-			navigate(PATH.LOGIN);
+		if (user_type !== 'BillerGroupAdmin') {
+			dispatch(reset());
+			dispatch(logout());
+			console.log('Invalid User Type');
+			<Navigate to={PATH.LOGIN} />;
 		}
-	}, [data, navigate]);
+	}, [dispatch, user_type]);
+
+	if (data === undefined) {
+		return null;
+	}
 
 	return data ? <Outlet /> : <Navigate to={PATH.LOGIN} />;
 };
