@@ -19,22 +19,31 @@ import { getFormattedDate } from '../../utilities/formatDate';
 
 // trying something
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { getMonitoringEndpoint } from '../../features/monitoring/monitoringSlice';
 
 function Monitoring() {
 	const dispatch = useDispatch();
-	const { monitor, isLoading, isError } = useSelector(
+	const { monitor, isLoading, isError, message } = useSelector(
 		(state) => state.monitoring,
 	);
 	const [page, setPage] = useState(1);
 	const [params, setParams] = useState(page);
 
 	React.useEffect(() => {
+		const fetch = () => dispatch(getMonitoringEndpoint(params));
+		fetch();
+
 		if (isError) {
-			alert('Error');
+			toast.error(message);
 		}
-		dispatch(getMonitoringEndpoint(params));
-	}, [dispatch, isError, params]);
+
+		const interval = setInterval(() => {
+			fetch();
+			console.log('Data Updated: ');
+		}, process.env.REACT_APP_REFETCH_TABLE);
+		return () => clearInterval(interval);
+	}, [dispatch, isError, params, message]);
 
 	const handleChange = (event, value) => {
 		setPage(value);

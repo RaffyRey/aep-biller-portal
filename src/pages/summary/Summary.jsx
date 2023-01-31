@@ -3,19 +3,13 @@ import {
 	CircularProgress,
 	Divider,
 	MenuItem,
-	Pagination,
 	Skeleton,
 	TableRow,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { TablePagination, WebLayout } from '../../components';
-import {
-	useBillerQuery,
-	useListingParamsQuery,
-} from '../../features/biller/billerApi';
 import { StyledTableRow } from '../../style/style';
 import { formatPesos } from '../../utilities/formatCurrency';
-import { numberWithCommas } from '../../utilities/formatNumberWithComma';
 import DataRow from './components/DataRow';
 import Filters from './components/Filter';
 import Loading from './components/Loading';

@@ -3,7 +3,6 @@ import {
 	CircularProgress,
 	Divider,
 	MenuItem,
-	Pagination,
 	Skeleton,
 	TableCell,
 	TableRow,
@@ -27,15 +26,15 @@ export default function Transaction() {
 	const {
 		listings,
 		isLoading: listingsLoading,
-		isError: listingsError,
-		message: listingsMessage,
+		// isError: listingsError,
+		// message: listingsMessage,
 	} = useSelector((state) => state.biller);
 
 	const {
 		transactions,
 		isLoading: transactionsLoading,
-		isError: transactionsError,
-		message: transactionsMessage,
+		// isError: transactionsError,
+		// message: transactionsMessage,
 	} = useSelector((state) => state.biller);
 
 	const [page, setPage] = useState(1);

@@ -12,7 +12,7 @@ import {
 // import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import * as PATH from '../../constant/path';
-import { logout, reset } from '../../features/auth/authSlice';
+// import { logout, reset } from '../../features/auth/authSlice';
 
 const Navlist = () => {
 	// const navigate = useNavigate();

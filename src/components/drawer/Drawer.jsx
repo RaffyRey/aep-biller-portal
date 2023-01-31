@@ -1,5 +1,5 @@
 import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
-import { Box, List, ListItem, Tooltip } from '@mui/material';
+import { Box, List, ListItem } from '@mui/material';
 import {
 	FaDesktop,
 	FaListOl,
@@ -23,9 +23,6 @@ function ResponsiveDrawer({ onClose }) {
 			alignItems='center'
 			sx={{ height: '100%' }}>
 			<header style={{ display: 'flex', alignItems: 'center', marginTop: '6px' }}>
-				{/* <button className='menu-button' onClick={onClose}>
-					
-				</button> */}
 				<AllEasyLogo />
 			</header>
 			<List component='nav' sx={{ height: '100%', width: '100%' }}>

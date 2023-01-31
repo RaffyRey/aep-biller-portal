@@ -18,12 +18,12 @@ export default function Profile() {
 	const {
 		profile,
 		isLoading: profileLoading,
-		isError: profileError,
+		// isError: profileError,
 	} = useSelector((state) => state.biller);
 	const {
 		billers,
 		isLoading: billersLoading,
-		isError: billersError,
+		// isError: billersError,
 	} = useSelector((state) => state.biller);
 
 	const [page, setPage] = useState(1);

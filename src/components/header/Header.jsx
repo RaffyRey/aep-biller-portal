@@ -95,7 +95,7 @@ function Header() {
 						onClose={handleCloseUserMenu}>
 						<MenuItem sx={{ display: 'flex', justifyContent: 'center' }}>
 							<Typography textAlign='center'>
-								{data && data.data.profile.first_name}
+								{/* {data && data.data.profile.first_name} */}
 							</Typography>
 						</MenuItem>
 						<MenuItem
@@ -108,7 +108,6 @@ function Header() {
 					</Menu>
 				</Box>
 			</AppBar>
-			{/* drawer */}
 			<Drawer open={isOpen} anchor={'left'} onClose={() => setIsOpen(false)}>
 				<ResponsiveDrawer onClose={() => setIsOpen(false)} />
 			</Drawer>

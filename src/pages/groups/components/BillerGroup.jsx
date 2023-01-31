@@ -1,16 +1,20 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { getBillerGroupAdmin } from '../../../features/biller_group/billerSlice';
 
 // biller data
 const BillerGroup = () => {
 	const dispatch = useDispatch();
-	const { biller, isLoading, isError } = useSelector((state) => state.biller);
+	const { biller, isLoading, isError, message } = useSelector(
+		(state) => state.biller,
+	);
 
 	useEffect(() => {
+		if (isError) toast.error(message);
 		dispatch(getBillerGroupAdmin());
-	}, []);
+	}, [dispatch, message, isError]);
 
 	return (
 		<Box

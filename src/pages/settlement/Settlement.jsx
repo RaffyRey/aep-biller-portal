@@ -11,7 +11,6 @@ import { TablePagination, WebLayout } from '../../components';
 import { StyledTableRow } from '../../style/style';
 import { formatPesos } from '../../utilities/formatCurrency';
 import { getFormattedDateTwo } from '../../utilities/formatDate';
-import { numberWithCommas } from '../../utilities/formatNumberWithComma';
 import DataRow from './components/DataRow';
 import Filters from './components/Filter';
 import Loading from './components/Loading';
@@ -30,25 +29,18 @@ export default function Settlement() {
 	const {
 		settlement,
 		isLoading: settlementLoading,
-		isError: settlementError,
+		// isError: settlementError,
 	} = useSelector((state) => state.biller);
 
 	const {
 		listings,
 		isLoading: listingsLoading,
-		isError: listingsError,
+		// isError: listingsError,
 	} = useSelector((state) => state.biller);
 
 	const [page, setPage] = useState(1);
 	const [settlementParams, setSettlementParams] = useState(`page=${page}`);
 	const [selectValue, setSelectValue] = useState('');
-
-	// let total_page =
-	// 	billerData && billerData.data.listings.meta.pagination.total_pages;
-
-	// let transaction_fee =
-	// 	billerData &&
-	// 	billerData.data.total[0].totalBillerFee / billerData.data.total[0].count;
 
 	// biller filter
 	const onFilter = (e) => {

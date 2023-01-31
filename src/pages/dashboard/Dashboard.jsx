@@ -4,7 +4,7 @@ import { WebLayout } from '../../components';
 import { formatPesos } from '../../utilities/formatCurrency';
 import { getFormattedDateTwo } from '../../utilities/formatDate';
 import PanelTab from './components/PanelTab';
-import TransactionChart from './components/TransactionChart';
+// import TransactionChart from './components/TransactionChart';
 import { TransactionData } from './components/TransactionData';
 
 // trying something
@@ -13,6 +13,7 @@ import {
 	getChartQuery,
 	getTransactionEndpoint,
 } from '../../features/data/dataSlice';
+import ChartTable from './components/Chart';
 
 function Dashboard() {
 	// trying something
@@ -20,6 +21,8 @@ function Dashboard() {
 	const { data, isLoading, isError, message } = useSelector(
 		(state) => state.data,
 	);
+
+	console.log(data?.data.aggregate[0].count);
 
 	const { chart, isLoading: isChartLoading } = useSelector(
 		(state) => state.data,
@@ -29,13 +32,15 @@ function Dashboard() {
 		if (isError) {
 			console.log(message);
 		}
-		console.log(data);
 		dispatch(getTransactionEndpoint('day'));
 		dispatch(getChartQuery('group_by=day'));
 	}, [isError, message, dispatch]);
 
 	// transaction
-	const [value, setValue] = useState(0);
+	const [value, setValue] =
+		useState(0); /* A state that is used to store the date range that is selected
+	by the user. */
+
 	const [dateRange, setDateRange] = useState([]);
 	const [startDate, endDate] = dateRange;
 	const [chartParams, setChartParams] = useState('day');
@@ -119,7 +124,7 @@ function Dashboard() {
 	let chartLoop =
 		dateRange === []
 			? isChartLoading
-			: chart && chart.data.aggregate.map((res) => res.revenue);
+			: chart && chart.data.aggregate.map((res) => formatPesos(res.revenue));
 
 	// chart data
 	// filter data
@@ -138,19 +143,19 @@ function Dashboard() {
 
 	let dataChart = activeLoopButton === false ? filterChart : chartLoop;
 
-	const chartData = {
-		labels,
-		datasets: [
-			{
-				label: 'Revenue',
-				backgroundColor: 'rgb(14, 53, 83)',
-				borderColor: 'rgb(14, 53, 83)',
-				data: dataChart,
-				showLine: true,
-				tension: 0.4,
-			},
-		],
-	};
+	// const chartData = {
+	// 	labels,
+	// 	datasets: [
+	// 		{
+	// 			label: 'Revenue',
+	// 			backgroundColor: 'rgb(14, 53, 83)',
+	// 			borderColor: 'rgb(14, 53, 83)',
+	// 			data: dataChart,
+	// 			showLine: true,
+	// 			tension: 0.4,
+	// 		},
+	// 	],
+	// };
 
 	return (
 		<WebLayout>
@@ -207,7 +212,7 @@ function Dashboard() {
 					{isChartLoading ? (
 						<CircularProgress />
 					) : (
-						<TransactionChart chartData={chartData} />
+						<ChartTable labels={labels} chartData={dataChart} />
 					)}
 				</Box>
 			</Box>
