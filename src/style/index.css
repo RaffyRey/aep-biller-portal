@@ -1,19 +1,19 @@
 *,
 *::after,
 *::before {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html,
 body {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	background-color: #fff;
-	color: #000;
-	overflow: auto;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #000;
+  overflow: auto;
 }
 
 h1,
@@ -24,275 +24,284 @@ h5,
 h6,
 p,
 label {
-	font-size: 1rem;
-	font-family: 'Montserrat', sans-serif;
-	font-weight: normal;
-	font-style: normal;
-	line-height: normal;
+  font-size: 1rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: normal;
 }
 
 #root {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 /* global scrollbar */
 ::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-	background-color: #e6e6e6;
+  background-color: #e6e6e6;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #26577d;
+  background-color: #c1272d;
 }
 
 /* page container */
 .page-container {
-	max-width: 1920px;
-	width: 100%;
-	height: 100vh;
-	max-height: 1000px;
-	background-color: #fff;
+  max-width: 1920px;
+  width: 100%;
+  height: 100vh;
+  max-height: 1000px;
+  background-color: #fff;
 }
 
 /* grid layout */
 .container {
-	width: 100%;
-	height: 100%;
-	display: grid;
-	grid-template-columns: 250px 1fr 1fr;
-	grid-template-rows: 70px 1fr 1fr;
-	grid-column-gap: 0px;
-	grid-row-gap: 0px;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 250px 1fr 1fr;
+  grid-template-rows: 70px 1fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  overflow: auto;
 }
 
 .header {
-	grid-area: 1 / 1 / 2 / 6;
+  grid-area: 1 / 1 / 2 / 6;
 }
 .aside {
-	grid-area: 2 / 1 / 6 / 2;
+  grid-area: 2 / 1 / 6 / 2;
+  height: 100%;
 }
 .content {
-	grid-area: 2 / 2 / 6 / 6;
+  grid-area: 2 / 2 / 6 / 6;
+  overflow: auto;
 }
 
 /* main */
 .main-container {
-	width: 100%;
-	height: calc(100% - 60px);
-	/* border: 1px solid #000; */
-	display: flex;
-	flex-direction: row;
-	background-color: #fff;
+  width: 100%;
+  height: calc(100% - 60px);
+  /* border: 1px solid #000; */
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  overflow: auto;
 }
 
 /* form container */
 .form-container {
-	width: 100%;
-	height: 100%;
-	background-color: #fff;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 }
 
 .form {
-	/* max-width: 550px; */
-	width: fit-content;
-	height: fit-content;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding: 8px 4px;
+  /* max-width: 550px; */
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
 }
 
 .form-group {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	margin-top: 8px;
-	width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  width: 350px;
 }
 
 /* alleasy logo */
 .alleasy-logo {
-	width: 150px;
-	height: 50px;
-	background-image: url('../assets/image/alleasylogo.png');
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position: center;
+  width: 250px;
+  height: 70px;
+  background-image: url("../assets/image/aep-logo-long.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
 .form-button {
-	width: 100%;
-	border: none;
-	background-color: #ff7f14;
-	color: #fff;
-	height: 45px;
-	border-radius: 6px;
-	cursor: pointer;
-	margin-top: 1rem;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-	font-size: 1rem;
-	font-weight: 700;
+  width: 100%;
+  border: none;
+  background-color: #ff7f14;
+  color: #fff;
+  height: 45px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  font-size: 1rem;
+  font-weight: 700;
 }
 .form-button:hover {
-	background-color: rgba(255, 127, 20, 0.9);
+  background-color: rgba(255, 127, 20, 0.9);
 }
 
 /* forgot password link */
 .forgot-password-link {
-	font-size: 0.8rem;
-	font-weight: 700;
-	color: #ff7f14;
-	text-decoration: none;
-	margin: 0 auto;
-	margin-top: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ff7f14;
+  text-decoration: none;
+  margin: 0 auto;
+  margin-top: 12px;
 }
 
 .forgot-password-link:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* menu button */
 .menu-button {
-	width: 30px;
-	height: 30px;
-	display: none;
-	align-items: center;
-	justify-content: center;
-	background: none;
-	border: none;
-	cursor: pointer;
-	margin-right: 18px;
+  width: 30px;
+  height: 30px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 18px;
 }
 
 .menu-button svg {
-	width: 20px;
-	height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .menu-close-button {
-	position: absolute;
-	right: -10%;
-	width: 30px;
-	height: 30px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: #fff;
-	z-index: 1000;
-	border: none;
-	cursor: pointer;
-	margin-right: 18px;
+  position: absolute;
+  right: -10%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  z-index: 1000;
+  border: none;
+  cursor: pointer;
+  margin-right: 18px;
 }
 
 .menu-close-button svg {
-	width: 20px;
-	height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 /* navbar */
 .navbar-container {
-	max-width: 250px;
-	width: 100%;
-	height: 100%;
-	background-color: #fff;
-	border-right: 1px solid #e6e6e6;
+  max-width: 250px;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-right: 1px solid #e6e6e6;
 }
 
 /* navlink */
 .navlink,
 .navlink-drawer {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	padding: 4px 8px;
-	border-radius: 6px;
-	border: none;
-	background-color: #fff;
-	text-decoration: none;
-	color: rgb(14, 53, 83);
-	padding-left: 0.8rem;
-	font-size: 1rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  background-color: #fff;
+  text-decoration: none;
+  color: #c1272d;
+  padding-left: 0.8rem;
+  font-size: 1rem;
 }
 
 .navlink svg,
 .navlink-drawer svg {
-	width: 18px;
-	height: 18px;
-	margin-right: 1rem;
+  width: 18px;
+  height: 18px;
+  margin-right: 1rem;
 }
 
 .navlink-active {
-	background-color: #0e3553;
-	color: #fff;
+  background-color: #c1272d;
+  color: #fff;
 }
 
 /* date picker */
 .react-datepicker-wrapper,
 .react-datepicker__input-container,
 .react-datepicker__input-container input {
-	display: block;
-	width: 100%;
-	height: 100%;
+  display: block;
+  width: 100%;
+  height: 40px;
 }
 
 .react-datepicker__input-container input {
-	height: 100%;
-	padding-left: 8px;
-	border-radius: 6px;
-	border: 1px solid #e6e6e6;
-	outline: none;
-	transition: all ease-in-out 300ms;
+  height: 100%;
+  padding-left: 8px;
+  border-radius: 6px;
+  border: 1px solid #e6e6e6;
+  outline: none;
+  transition: all ease-in-out 300ms;
 }
 
 .react-datepicker__input-container input:hover {
-	box-shadow: 0 0 5px rgba(33, 150, 243, 0.4);
-	border: 1px solid #2196f3;
+  box-shadow: 0 0 5px rgba(193, 39, 45, 0.4);
+  border: 1px solid rgb(193, 39, 45);
+}
+
+.react-datepicker__close-icon::after {
+  background: #c1272d;
 }
 
 /* responsive */
 @media (max-width: 840px) {
-	/* grid container */
-	.container {
-		grid-template-columns: 100px 1fr 1fr;
-	}
+  /* grid container */
+  .container {
+    grid-template-columns: 100px 1fr 1fr;
+  }
 
-	/* navbar */
-	.navlink {
-		padding: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+  /* navbar */
+  .navlink {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-	.navlink svg {
-		margin: 0;
-	}
+  .navlink svg {
+    margin: 0;
+  }
 
-	.navlink p {
-		display: none;
-	}
+  .navlink p {
+    display: none;
+  }
 }
 
 @media (max-width: 700px) {
-	/* grid container */
-	.container {
-		grid-template-columns: 0px 1fr 1fr;
-	}
+  /* grid container */
+  .container {
+    grid-template-columns: 0px 1fr 1fr;
+  }
 
-	.menu-button {
-		display: flex;
-	}
+  .menu-button {
+    display: flex;
+  }
 
-	.navbar-container {
-		display: none;
-	}
+  .navbar-container {
+    display: none;
+  }
 }
