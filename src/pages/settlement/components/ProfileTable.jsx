@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Paper,
   Table,
@@ -9,16 +8,9 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import React from "react";
 
-function ProfileTable({
-  billerName,
-  transactionDate,
-  transactionCount,
-  transactionAmount,
-  transactionFee,
-  totalFee,
-  settlementAmount,
-}) {
+function ProfileTable({ billerName, transactionFee, totalFee, totalAmount }) {
   return (
     <React.Fragment>
       <TableContainer component={Paper}>
@@ -26,24 +18,6 @@ function ProfileTable({
           <TableHead>
             <TableRow>
               <TableHeaderCell align="left" title="Biller Name" />
-              <TableHeaderCell align="right" title="Transaction Date" />
-              <TableHeaderCell align="right" title="Transaction Count" />
-              <TableHeaderCell align="right" title="Total Transaction Amount" />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableDataCell align="left" data={billerName} />
-              <TableDataCell align="right" data={transactionDate} />
-              <TableDataCell align="right" data={transactionCount} />
-              <TableDataCell align="right" data={transactionAmount} />
-            </TableRow>
-          </TableBody>
-        </Table>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeaderCell align="left" title="" />
               <TableHeaderCell align="right" title="Transaction Fee" />
               <TableHeaderCell align="right" title="Total Transaction Fee" />
               <TableHeaderCell align="right" title="Total Settlement Amount" />
@@ -51,10 +25,10 @@ function ProfileTable({
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableDataCell align="left" data="" />
+              <TableDataCell align="left" data={billerName} />
               <TableDataCell align="right" data={transactionFee} />
               <TableDataCell align="right" data={totalFee} />
-              <TableDataCell align="right" data={settlementAmount} />
+              <TableDataCell align="right" data={totalAmount} />
             </TableRow>
           </TableBody>
         </Table>

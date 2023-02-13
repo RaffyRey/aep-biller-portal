@@ -1,4 +1,4 @@
-import { Box, Pagination } from "@mui/material";
+import { Box, Pagination, Paper } from "@mui/material";
 import React from "react";
 
 const TablePagination = ({ total_page, handleChange }) => {
@@ -9,6 +9,8 @@ const TablePagination = ({ total_page, handleChange }) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      component={Paper}
+      elevation={2}
     >
       <Pagination
         count={total_page}
@@ -16,6 +18,8 @@ const TablePagination = ({ total_page, handleChange }) => {
         showLastButton
         size="small"
         onChange={handleChange}
+        variant="outlined"
+        shape="rounded"
       />
     </Box>
   );

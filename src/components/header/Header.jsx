@@ -7,13 +7,13 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as PATH from "../../constant/path";
 import { logout, reset } from "../../features/auth/authSlice";
 import AllEasyLogo from "../alleasyLogo/AllEasyLogo";
@@ -31,7 +31,7 @@ function Header() {
     dispatch(logout());
     dispatch(reset());
     navigate(PATH.LOGIN);
-    console.log("Successful logout");
+    toast.success("Successful Logout");
   };
 
   const handleOpenUserMenu = (event) => {
@@ -72,14 +72,12 @@ function Header() {
             padding: "4px",
           }}
         >
-          {/* <Tooltip title={`Hello, ${data?.data.profile.first_name}`}> */}
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar
               alt="Remy Sharp"
               //  src={data?.data.institution.logo}
             />
           </IconButton>
-          {/* </Tooltip> */}
           <Menu
             sx={{ mt: "45px", padding: "4px" }}
             id="menu-appbar"
@@ -112,7 +110,6 @@ function Header() {
           </Menu>
         </Box>
       </AppBar>
-      {/* drawer */}
       <Drawer open={isOpen} anchor={"left"} onClose={() => setIsOpen(false)}>
         <ResponsiveDrawer onClose={() => setIsOpen(false)} />
       </Drawer>

@@ -1,14 +1,8 @@
-import {
-  Box,
-  CircularProgress,
-  Container,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Container, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { AllEasyLogo, Footer } from "../../components";
+import { AllEasyLogo, Footer, Spinner } from "../../components";
 import * as PATH from "../../constant/path";
 
 // redux
@@ -68,7 +62,7 @@ function Login() {
     }
   };
 
-  if (isLoading) return <CircularProgress color="error" />;
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="form-container">
@@ -92,9 +86,8 @@ function Login() {
             </Typography>
 
             {/* login input form */}
-            <div className="form-group">
+            <form className="form-group">
               <TextField
-                // id='outlined-input'
                 id="outlined-error"
                 label="Email"
                 type="Email"
@@ -127,7 +120,7 @@ function Login() {
               <Link to={PATH.FORGOT_PASSWORD} className="forgot-password-link">
                 Forgot password?
               </Link>
-            </div>
+            </form>
             <Footer />
           </div>
         </Box>

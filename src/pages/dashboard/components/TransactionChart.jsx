@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from "chart.js";
 import React from "react";
-import { Bar, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 export default function TransactionChart({ chartData }) {
   ChartJS.register(
@@ -50,7 +50,7 @@ export default function TransactionChart({ chartData }) {
       justifyContent="center"
       flexDirection="row"
     >
-      <Box maxWidth="1020px" width="100%" height="150px">
+      <Box maxWidth="1400px" width="100%" height="150px">
         <Line data={chartData} options={options} />
       </Box>
     </Box>

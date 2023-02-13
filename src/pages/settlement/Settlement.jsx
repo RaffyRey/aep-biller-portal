@@ -4,18 +4,15 @@ import {
   Divider,
   MenuItem,
   Skeleton,
-  TableRow,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { TablePagination, WebLayout } from "../../components";
+import { Filter, Spinner, TablePagination, WebLayout } from "../../components";
 import { StyledTableRow } from "../../style/style";
 import { formatPesos } from "../../utilities/formatCurrency";
 import { getFormattedDateTwo } from "../../utilities/formatDate";
 import DataRow from "./components/DataRow";
-import Filters from "./components/Filter";
-import Loading from "./components/Loading";
-import ProfileCard from "./components/ProfileCard";
 import SettlementTable from "./components/SettlementTable";
+import { toast } from "react-toastify";
 
 // new imports
 import { useDispatch, useSelector } from "react-redux";
@@ -24,11 +21,20 @@ import {
   getSettlement,
 } from "../../features/biller_group/billerSlice";
 import ProfileTable from "./components/ProfileTable";
+import { addDays } from "date-fns";
 
 export default function Settlement() {
+  const [searchData, setSearchData] = useState("");
   const [page, setPage] = useState(1);
   const [settlementParams, setSettlementParams] = useState(`page=${page}`);
   const [selectValue, setSelectValue] = useState("");
+  const [state, setState] = React.useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
   const dispatch = useDispatch();
   const {
     settlement,
@@ -45,7 +51,33 @@ export default function Settlement() {
   // biller filter
   const onFilter = (e) => {
     e.preventDefault();
-    setSettlementParams(`biller=${selectValue}`);
+    let newStartDate = getFormattedDateTwo(state[0].startDate);
+    let newEndDate = getFormattedDateTwo(state[0].endDate);
+
+    if (selectValue === "" && state.length === 0) {
+      toast.error("Date range picker and biller input is empty");
+    } else if (selectValue === "" && state.length !== 0) {
+      setSettlementParams(`page=${page}from=${newStartDate}&to=${newEndDate}`);
+    } else if (selectValue !== "" && state.length === 0) {
+      setSettlementParams(`page=${page}&biller=${selectValue}`);
+    } else if (selectValue !== "" && state.length !== 0) {
+      setSettlementParams(
+        `page=${page}&biller=${selectValue}&from=${newStartDate}&to=${newEndDate}`
+      );
+    } else {
+      setSettlementParams(`page=${page}`);
+    }
+  };
+
+  // search
+  const searchOnClick = (e) => {
+    e.preventDefault();
+
+    if (!searchData) {
+      setSettlementParams(`page=${page}`);
+    } else {
+      setSettlementParams(`page=1&keyword=${searchData}`);
+    }
   };
 
   // pagination
@@ -55,105 +87,73 @@ export default function Settlement() {
   };
 
   useEffect(() => {
+    if (settlementError || listingsError) {
+      toast.error("Error");
+    }
+
     dispatch(getListings());
     dispatch(getSettlement(settlementParams));
-  }, [dispatch, settlementParams]);
+  }, [dispatch, settlementParams, settlementError, listingsError]);
 
   return (
     <WebLayout>
-      <Box
-        width="100%"
-        height="100%"
-        display="flex"
-        flexDirection="column"
-        overflow="auto"
-        bgcolor="#fff"
-        paddingY={1}
-        paddingX={2}
-      >
-        <Filters
-          selectChildren={
-            listingsLoading ? (
-              <CircularProgress size={16} />
-            ) : (
-              listings?.data.listings.billers.map((res) => (
-                <MenuItem key={res.id} value={res.code} sx={{ width: 200 }}>
-                  {res.name}
-                </MenuItem>
-              ))
-            )
-          }
-          selectValue={selectValue}
-          selectOnChange={(e) => setSelectValue(e.target.value)}
-          onFilter={onFilter}
-        />
-        <Divider orientation="horizontal" sx={{ marginBottom: 2 }} flexItem />
-        <Box width="100%" height="fit-content">
-          <ProfileCard
-            profileName={
-              settlementLoading ? (
-                <SkeletonLoader />
+      {settlementLoading || listingsLoading ? (
+        <Spinner />
+      ) : (
+        <Box
+          width="100%"
+          display="flex"
+          flexDirection="column"
+          bgcolor="#fff"
+          padding={1}
+        >
+          <Filter
+            selectChildren={
+              listingsLoading ? (
+                <CircularProgress size={16} />
               ) : (
-                settlement?.data.billers.name
+                listings?.data.listings.billers.map((res) => (
+                  <MenuItem key={res.id} value={res.code} sx={{ width: 200 }}>
+                    {res.name}
+                  </MenuItem>
+                ))
               )
             }
-            profileTransactionDate={
-              settlementLoading ? (
-                <SkeletonLoader />
-              ) : (
-                settlement?.data.total[0].date
-              )
-            }
-            profileTransactionCount={
-              settlementLoading ? (
-                <SkeletonLoader />
-              ) : (
-                settlement?.data.total[0].count
-              )
-            }
-            profileTransactionAmount={
-              settlementLoading ? (
-                <SkeletonLoader />
-              ) : (
-                formatPesos(settlement?.data.total[0].revenue)
-              )
-            }
-            profileTransactionFee={
-              settlementLoading ? (
-                <SkeletonLoader />
-              ) : (
-                formatPesos(settlement?.data.total[0].transaction_fee)
-              )
-            }
-            profileTotalTransactionFee={
-              settlementLoading ? (
-                <SkeletonLoader />
-              ) : (
-                formatPesos(settlement?.data.total[0].totalBillerFee)
-              )
-            }
-            profileSettlementAmount={
-              settlementLoading ? (
-                <SkeletonLoader />
-              ) : (
-                formatPesos(settlement?.data.total[0].totalSettlement)
-              )
-            }
+            selectValue={selectValue}
+            onFilter={onFilter}
+            selectOnChange={(e) => setSelectValue(e.target.value)}
+            title="Settlement"
+            pickerOnchange={(item) => setState([item.selection])}
+            dateRange={state}
+            searchValue={searchData}
+            searchOnChange={(e) => setSearchData(e.target.value)}
+            searchOnClick={searchOnClick}
           />
-          <Divider orientation="horizontal" sx={{ marginY: 2 }} flexItem />
-          <SettlementTable>
-            {settlementLoading ? (
-              <TableRow sx={{ width: "100%", position: "relative" }}>
-                <Loading />
-              </TableRow>
-            ) : (
-              settlement?.data.listings.data.map((row, index) => (
+          <Divider orientation="horizontal" sx={{ marginBottom: 2 }} flexItem />
+          <Box width="100%" height="fit-content">
+            <ProfileTable
+              billerName={
+                settlementLoading ? (
+                  <SkeletonLoader />
+                ) : (
+                  settlement?.data.billers.name
+                )
+              }
+              totalFee={formatPesos(settlement?.data.total[0].totalBillerFee)}
+              transactionFee={"--"}
+              totalAmount={formatPesos(
+                settlement?.data.total[0].totalSettlement
+              )}
+            />
+            <Divider orientation="horizontal" sx={{ marginY: 2 }} flexItem />
+            <SettlementTable>
+              {settlement?.data.listings.data.map((row, index) => (
                 <StyledTableRow
                   key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <DataRow
-                    dataOne={getFormattedDateTwo(row.created_at)}
+                    dataOne={row.created_at}
                     dataTwo={row.ae_refno}
                     dataThree={row.payment_type}
                     dataFour={formatPesos(row.debit)}
@@ -162,15 +162,15 @@ export default function Settlement() {
                     dataSeven={row.refno}
                   />
                 </StyledTableRow>
-              ))
-            )}
-          </SettlementTable>
-          <TablePagination
-            total_page={settlement?.data.listings.meta.pagination.total_pages}
-            handleChange={onPagination}
-          />
+              ))}
+            </SettlementTable>
+            <TablePagination
+              total_page={settlement?.data.listings.meta.pagination.total_pages}
+              handleChange={onPagination}
+            />
+          </Box>
         </Box>
-      </Box>
+      )}
     </WebLayout>
   );
 }

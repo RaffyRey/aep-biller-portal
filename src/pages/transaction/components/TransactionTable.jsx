@@ -12,15 +12,17 @@ import { StyledTableCell } from "../../../style/style";
 
 export default function TransactionTable({ children }) {
   return (
-    <Box width="100%" height="700px" overflow="hidden">
+    <Box width="100%" height="fit-content" overflow="hidden">
       <TableContainer
         sx={{
-          height: "100%",
+          height: "fit-content",
+          maxHeight: "100%",
           width: "100%",
           position: "relative",
           overflow: "auto",
         }}
         component={Paper}
+        elevation={1}
       >
         <Table
           sx={{ height: "100%", width: "100%", position: "relative" }}

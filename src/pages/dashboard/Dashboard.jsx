@@ -1,13 +1,11 @@
 import { Box, CircularProgress } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { WebLayout } from "../../components";
 import { formatPesos } from "../../utilities/formatCurrency";
 import { getFormattedDateTwo } from "../../utilities/formatDate";
 import PanelTab from "./components/PanelTab";
 import TransactionChart from "./components/TransactionChart";
 import { TransactionData } from "./components/TransactionData";
-
-// trying something
 import { useDispatch, useSelector } from "react-redux";
 import {
   getChartQuery,
@@ -16,7 +14,6 @@ import {
 import { toast } from "react-toastify";
 
 function Dashboard() {
-  // trying something
   const dispatch = useDispatch();
   const { data, isLoading, isError, message } = useSelector(
     (state) => state.data
@@ -26,7 +23,7 @@ function Dashboard() {
     (state) => state.data
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isError) {
       toast.error(message);
     }
@@ -34,7 +31,7 @@ function Dashboard() {
     dispatch(getChartQuery("group_by=day"));
   }, [isError, message, dispatch]);
 
-  // transaction
+  // state
   const [value, setValue] = useState(0);
   const [dateRange, setDateRange] = useState([]);
   const [startDate, endDate] = dateRange;
@@ -89,7 +86,7 @@ function Dashboard() {
     try {
       dispatch(getTransactionEndpoint("to_date"));
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   };
 
@@ -99,12 +96,10 @@ function Dashboard() {
     let newStartDate = getFormattedDateTwo(dateRange[0]);
     let newEndDate = getFormattedDateTwo(dateRange[1]);
 
-    console.log(dateRange.length === 0);
-
     if (dateRange.length === 0) {
       dispatch(getChartQuery("group_by=day"));
       setChartParams("day");
-      console.log("Insert Date");
+      toast.error("Insert Date");
     } else {
       dispatch(getChartQuery(`from=${newStartDate}&to=${newEndDate}`));
     }
@@ -164,20 +159,18 @@ function Dashboard() {
         flexDirection="column"
         overflow="auto"
       >
-        {/* left box */}
-
         <TransactionData
           panelvalue={value}
           countData={
             isLoading ? (
-              <CircularProgress size={16} color="error" />
+              <CircularProgress size={16} color="primary" />
             ) : (
               <>{data && data.data.aggregate[0].count}</>
             )
           }
           amountData={
             isLoading ? (
-              <CircularProgress size={16} color="error" />
+              <CircularProgress size={16} color="primary" />
             ) : (
               <>{formatPesos(data && data.data.aggregate[0].revenue)}</>
             )
@@ -198,8 +191,6 @@ function Dashboard() {
             datePickerOnClick={onDateRangePicker}
           />
         </TransactionData>
-
-        {/* right box */}
         <Box
           width="100%"
           height="100%"

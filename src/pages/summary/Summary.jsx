@@ -3,26 +3,37 @@ import {
   CircularProgress,
   Divider,
   MenuItem,
-  Skeleton,
   TableRow,
+  TableCell,
+  Skeleton,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { TablePagination, WebLayout } from "../../components";
+import { Filter, TablePagination, WebLayout } from "../../components";
 import { StyledTableRow } from "../../style/style";
 import { formatPesos } from "../../utilities/formatCurrency";
 import DataRow from "./components/DataRow";
-import Filters from "./components/Filter";
-import Loading from "./components/Loading";
-import ProfileCard from "./components/ProfileCard";
 import SummaryTable from "./components/SummaryTable";
-
-// new import
+import { getFormattedDateTwo } from "../../utilities/formatDate";
 import { useDispatch, useSelector } from "react-redux";
 import { getListings } from "../../features/biller_group/billerSlice";
 import { getSummaries } from "../../features/summary/summarySlice";
 import ProfileTable from "./components/ProfileTable";
+import { addDays } from "date-fns";
+import { toast } from "react-toastify";
 
 export default function Summary() {
+  const [page, setPage] = useState(1);
+  const [summariesParams, setSummariesParams] = useState(`page=${page}`);
+  const [selectValue, setSelectValue] = useState("");
+  const [searchData, setSearchData] = useState("");
+  const [state, setState] = React.useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
+
   const dispatch = useDispatch();
   const { listings, isLoading: listingsLoading } = useSelector(
     (state) => state.biller
@@ -31,14 +42,36 @@ export default function Summary() {
     (state) => state.summary
   );
 
-  const [page, setPage] = useState(1);
-  const [summariesParams, setSummariesParams] = useState(`page=${page}`);
-  const [selectValue, setSelectValue] = useState("");
-
   // biller filter
   const onFilter = (e) => {
     e.preventDefault();
-    setSummariesParams(`biller=${selectValue}`);
+    let newStartDate = getFormattedDateTwo(state[0].startDate);
+    let newEndDate = getFormattedDateTwo(state[0].endDate);
+
+    if (selectValue === "" && state.length === 0) {
+      toast.error("Date range picker and biller input is empty");
+    } else if (selectValue === "" && state.length !== 0) {
+      setSummariesParams(`page=${page}&from=${newStartDate}&to=${newEndDate}`);
+    } else if (selectValue !== "" && state.length === 0) {
+      setSummariesParams(`page=${page}&biller=${selectValue}`);
+    } else if (selectValue !== "" && state.length !== 0) {
+      setSummariesParams(
+        `page=${page}&biller=${selectValue}&from=${newStartDate}&to=${newEndDate}`
+      );
+    } else {
+      setSummariesParams(`page=${page}`);
+    }
+  };
+
+  // search
+  const searchOnClick = (e) => {
+    e.preventDefault();
+
+    if (!searchData) {
+      setSummariesParams(`page=${page}`);
+    } else {
+      setSummariesParams(`page=1&keyword=${searchData}`);
+    }
   };
 
   // pagination
@@ -56,15 +89,12 @@ export default function Summary() {
     <WebLayout>
       <Box
         width="100%"
-        height="100%"
         display="flex"
         flexDirection="column"
-        overflow="auto"
         bgcolor="#fff"
-        paddingY={1}
-        paddingX={2}
+        padding={1}
       >
-        <Filters
+        <Filter
           selectChildren={
             listingsLoading ? (
               <CircularProgress size={16} />
@@ -79,6 +109,12 @@ export default function Summary() {
           selectValue={selectValue}
           selectOnChange={(e) => setSelectValue(e.target.value)}
           onFilter={onFilter}
+          title="Summary"
+          pickerOnchange={(item) => setState([item.selection])}
+          dateRange={state}
+          searchValue={searchData}
+          searchOnChange={(e) => setSearchData(e.target.value)}
+          searchOnClick={searchOnClick}
         />
         <Divider orientation="horizontal" sx={{ marginBottom: 2 }} flexItem />
         <Box width="100%" height="fit-content">
@@ -90,9 +126,19 @@ export default function Summary() {
           />
           <Divider orientation="horizontal" sx={{ marginY: 2 }} flexItem />
           <SummaryTable>
-            {summariesLoading ? (
-              <TableRow sx={{ width: "100%", position: "relative" }}>
-                <Loading />
+            {summariesLoading || listingsLoading ? (
+              <TableRow
+                sx={{ width: "100%", height: 50, position: "relative" }}
+              >
+                {[...Array(6)].map((i) => (
+                  <TableCell key={i}>
+                    <Skeleton
+                      variant="rectangular"
+                      width="100%"
+                      height="100%"
+                    />
+                  </TableCell>
+                ))}
               </TableRow>
             ) : (
               summaries?.data.listings.data.map((row, index) => (
@@ -101,7 +147,7 @@ export default function Summary() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <DataRow
-                    dataOne={row.transaction.created_at}
+                    dataOne={row.created_at}
                     dataTwo={row.ae_refno}
                     dataThree={row.payment_type}
                     dataFour={formatPesos(row.debit)}

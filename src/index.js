@@ -8,6 +8,9 @@ import App from "./App";
 import { store } from "./app/store";
 import { Theme } from "./style/customTheme";
 import "./style/index.css";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
+import "animate.css";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
