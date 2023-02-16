@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URI = `${process.env.REACT_APP_BILLER_PROD}/biller_group_admin/summary`;
-// const API_URI = `${process.env.REACT_APP_BILLER_STG}/biller_group_admin/summary`;
+// const API_URI = `${process.env.REACT_APP_BILLER_PROD}/biller_group_admin/summary`;
+const API_URI = `${process.env.REACT_APP_BILLER_STG}/biller_group_admin/summary`;
 
 const summary = async (token) => {
   const config = {

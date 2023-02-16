@@ -165,14 +165,14 @@ function Dashboard() {
             isLoading ? (
               <CircularProgress size={16} color="primary" />
             ) : (
-              <>{data && data.data.aggregate[0].count}</>
+              <>{data?.data?.aggregate[0].count}</>
             )
           }
           amountData={
             isLoading ? (
               <CircularProgress size={16} color="primary" />
             ) : (
-              <>{formatPesos(data && data.data.aggregate[0].revenue)}</>
+              <>{formatPesos(data?.data?.aggregate[0].revenue)}</>
             )
           }
         >

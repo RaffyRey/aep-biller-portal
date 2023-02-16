@@ -7,3 +7,4 @@ export { default as Navbar } from "./navbar/Navbar";
 export { default as TablePagination } from "./pagination/TablePagination";
 export { default as Filter } from "./filter/Filter";
 export { default as Spinner } from "./spinner/Spinner";
+export { default as Modal } from "./modal/Modal";

@@ -18,10 +18,11 @@ import { formatPesos } from "../../utilities/formatCurrency";
 // trying something
 import { useDispatch, useSelector } from "react-redux";
 import { getMonitoringEndpoint } from "../../features/monitoring/monitoringSlice";
+import { toast } from "react-toastify";
 
 function Monitoring() {
   const dispatch = useDispatch();
-  const { monitor, isLoading, isError } = useSelector(
+  const { monitor, isLoading, isError, message } = useSelector(
     (state) => state.monitoring
   );
   const [page, setPage] = useState(1);
@@ -29,10 +30,10 @@ function Monitoring() {
 
   React.useEffect(() => {
     if (isError) {
-      alert("Error");
+      toast.error(message);
     }
     dispatch(getMonitoringEndpoint(params));
-  }, [dispatch, isError, params]);
+  }, [dispatch, isError, params, message]);
 
   const handleChange = (event, value) => {
     setPage(value);

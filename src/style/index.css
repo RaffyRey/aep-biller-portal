@@ -14,6 +14,7 @@ body {
   background-color: #fff;
   color: #000;
   overflow: auto;
+  position: relative;
 }
 
 h1,
@@ -36,6 +37,7 @@ label {
   align-items: center;
   justify-content: center;
   height: 100%;
+  position: relative;
 }
 
 /* global scrollbar */
@@ -94,6 +96,30 @@ label {
   flex-direction: row;
   background-color: #fff;
   overflow: auto;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 5000;
+}
+
+.modal {
+  width: 100%;
+  max-width: 700px;
+  height: fit-content;
+  /* max-height: fit-content; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  z-index: 10000;
 }
 
 /* form container */

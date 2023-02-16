@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BILLER_DATA_API = process.env.REACT_APP_BILLER_PROD;
-// const BILLER_DATA_API = process.env.REACT_APP_BILLER_STG;
+// const BILLER_DATA_API = process.env.REACT_APP_BILLER_PROD;
+const BILLER_DATA_API = process.env.REACT_APP_BILLER_STG;
 const PROFILE_API = `${BILLER_DATA_API}/biller_group_admin`;
 const DATA_ENDPOINT_API = `${BILLER_DATA_API}/biller_group_admin/`;
 
